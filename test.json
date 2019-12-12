@@ -1,0 +1,4452 @@
+{
+  "base": {
+    "pageConfig": {
+      "$$events": {
+        "pageInit": []
+      },
+      "$$variables": [],
+      "$$manualCodeMap": {},
+      "hasFileUpload": 0,
+      "isCustomUserList": 0,
+      "encapsulation": "None",
+      "customFormCode": {
+        "html": {
+          "enable": false,
+          "code": ""
+        },
+        "scss": {
+          "enable": false,
+          "code": ""
+        }
+      },
+      "translateConfig": {}
+    },
+    "extServices": [],
+    "frontCodes": [{
+      "fileName": "detailthree.component.ts",
+      "fileContent": "import {\n    Component,\n    Injector,\n    ViewEncapsulation\n} from '@angular/core';\nimport {\n    DetailthreeComponentAuto\n} from './detailthree.component.auto';\n\n@Component({\n    selector: 'detailthree',\n    templateUrl: 'detailthree.component.html',\n    styleUrls: ['detailthree.component.scss'],\n    encapsulation: ViewEncapsulation.None,\n})\nexport class DetailthreeComponent extends DetailthreeComponentAuto {\n\n    constructor(public Injector: Injector) {\n        super(Injector);\n    }\n\n}"
+    }, {
+      "fileName": "detailthree.component.auto.ts",
+      "fileContent": "import {\n    Component\n} from '@angular/core';\nimport {\n    Input\n} from '@angular/core';\nimport {\n    Output\n} from '@angular/core';\nimport {\n    EventEmitter\n} from '@angular/core';\nimport {\n    angular\n} from '@flydiy/core/services';\nimport {\n    Injector\n} from '@angular/core';\nimport {\n    ActivatedRoute\n} from '@angular/router';\nimport {\n    TranslateService\n} from '@ngx-translate/core';\nimport {\n    UserService\n} from '@flydiy/login';\nimport {\n    translateFn\n} from './detailthree.component.translate';\n// 防止用户多添加参数或者少添加参数报错\nconst $event = '参数异常';\nconst rowData = '参数异常';\nexport class DetailthreeComponentAuto {\n    $event = '参数异常';\n    rowData = '参数异常';\n    // 存储路由参数\n    routerParams: any = {};\n    // 外部传进来的主对象的参数\n    @Input() mainObjectParams: any;\n\n\n    // 存储表单数据\n    @Input() data: any = {\n\n    };\n\n    @Output() dataChange: EventEmitter < any > = new EventEmitter();\n\n\n    TranslateService: TranslateService;\n    UserService: UserService;\n    ActivatedRoute: ActivatedRoute;\n    constructor(public Injector: Injector) {\n\n        this.TranslateService = this.Injector.get(TranslateService);\n        this.UserService = this.Injector.get(UserService);\n        this.ActivatedRoute = this.Injector.get(ActivatedRoute);\n\n        this.ActivatedRoute.queryParams.subscribe((queryParams: any) => {\n            this.routerParams = queryParams;\n        });\n        translateFn()(this.TranslateService);\n\n    }\n    ngOnInit() {\n\n\n    }\n\n\n    // 父子孙类型的数据，在前端和后端格式是不一样的，要先转换之后，再传递到后端\n    transformFormData() {\n        let data = angular.copy(this.data);\n\n        // 算出有没有使用父子孙\n        let sunKey, suenKey;\n        for (let key of Object.keys(data)) {\n            let objects = data[key];\n            if (angular.isArray(objects)) {\n                // 不一定每一个子都有孙，所以要遍历\n                let isSon = false;\n                for (let keyT of objects) {\n                    if (keyT.$children) {\n                        isSon = true;\n                    }\n                }\n                if (objects.length > 0 && isSon) {\n                    sunKey = key; // 子\n                } else {\n                    suenKey = key; // 孙\n                }\n            }\n        }\n\n        // 是父子孙,就对数据进行转换\n        if (sunKey && suenKey) {\n            let sunItems = data[sunKey];\n            let suenItems = data[suenKey];\n            for (let sun of sunItems) {\n                if (sun.$children) {\n                    suenItems.push(sun.$children);\n                } else {\n                    suenItems.push([]);\n                }\n                delete sun.$children;\n            }\n        }\n        return data;\n    }\n\n\n\n\n\n}"
+    }, {
+      "fileName": "detailthree.component.html",
+      "fileContent": "<form #flyForm=\"ngForm\" #stage name=\"stage\" class=\"ui-fly-form bbbb_detailthree\">\n    <div #flyFlexRow1 name=\"flyFlexRow1\" class=\"bbbb_detailthree_flyFlexRow1\">\n        <span #text name=\"text\" class=\"bbbb_detailthree_text\">行家平台</span>\n        <button type=\"button\" [label]=\"('成为行家'|translate)||'成为行家'\" #button name=\"button\" class=\"bbbb_detailthree_button\" fly-button></button>\n        <span #text1 name=\"text1\" class=\"bbbb_detailthree_text1\">v_zkzhou（周坤）</span>\n    </div>\n\n    <div class=\"fly-container-fluid\" #flyLayout3 name=\"flyLayout3\">\n        <div class=\"fly-layout1-header\">\n            <div class=\"row fly-container-fluid\" #flyLayout4-3 name=\"flyLayout4-3\" class=\"bbbb_detailthree_flyLayout4-3\">\n                <div class=\"col-md-4 fly-ui-container\">\n                    <fly-image #flyImg name=\"flyImg\" styleClass=\"bbbb_detailthree_flyImg\">\n                    </fly-image>\n                </div>\n                <div class=\"col-md-4 fly-ui-container\">\n                    <span #text2 name=\"text2\" class=\"bbbb_detailthree_text2\">Shuhaoou（欧书豪）</span>\n                    <span #text3 name=\"text3\" class=\"bbbb_detailthree_text3\">总办&nbsp;CEO</span>\n                    <div #flyFlexRow name=\"flyFlexRow\" class=\"bbbb_detailthree_flyFlexRow\">\n                        <fly-image #flyImg1 name=\"flyImg1\" styleClass=\"bbbb_detailthree_flyImg1\">\n                        </fly-image>\n                        <span #text4 name=\"text4\" class=\"bbbb_detailthree_text4\">北京</span>\n                        <span #text5 name=\"text5\" class=\"bbbb_detailthree_text5\">12</span>\n                        <span #text6 name=\"text6\" class=\"bbbb_detailthree_text6\">人见过，评分</span>\n                        <span #text7 name=\"text7\" class=\"bbbb_detailthree_text7\">9.2</span>\n                        <span #text8 name=\"text8\" class=\"bbbb_detailthree_text8\">分</span>\n                    </div>\n                </div>\n                <div class=\"col-md-4 fly-ui-container\">\n                    <div #flyFlexRow2 name=\"flyFlexRow2\" class=\"bbbb_detailthree_flyFlexRow2\">\n                        <fly-image #flyImg2 name=\"flyImg2\" styleClass=\"bbbb_detailthree_flyImg2\">\n                        </fly-image>\n                        <span #text9 name=\"text9\" class=\"bbbb_detailthree_text9\">入职时间：2016年03月06日</span>\n                    </div>\n                    <div #flyFlexRow3 name=\"flyFlexRow3\" class=\"bbbb_detailthree_flyFlexRow3\">\n                        <fly-image #flyImg3 name=\"flyImg3\" styleClass=\"bbbb_detailthree_flyImg3\">\n                        </fly-image>\n                        <span #text10 name=\"text10\" class=\"bbbb_detailthree_text10\">职位：高级工程师</span>\n                    </div>\n                    <div #flyFlexRow4 name=\"flyFlexRow4\" class=\"bbbb_detailthree_flyFlexRow4\">\n                        <fly-image #flyImg4 name=\"flyImg4\" styleClass=\"bbbb_detailthree_flyImg4\">\n                        </fly-image>\n                        <span #text11 name=\"text11\" class=\"bbbb_detailthree_text11\">所在团队:S3/腾讯学院/培训运营中心/在线学习平台组</span>\n                    </div>\n                </div>\n            </div>\n        </div>\n        <div class=\"clearfix fly-content-wrap\">\n            <div class=\"fly-layout1-content\">\n                <div #flyFlexRow6 name=\"flyFlexRow6\" class=\"bbbb_detailthree_flyFlexRow6\">\n\n                    <div class=\"row fly-container-fluid\" #flyLayout48 name=\"flyLayout48\" class=\"bbbb_detailthree_flyLayout48\">\n                        <div class=\"col-md-4 fly-ui-container\">\n                            <span #text15 name=\"text15\" class=\"bbbb_detailthree_text15\">如何进行技术团队的建设和员工培养？</span>\n                        </div>\n                        <div class=\"col-md-8 fly-ui-container\">\n                            <div class=\"fly-container-fluid\" #flyLayout31 name=\"flyLayout31\" class=\"bbbb_detailthree_flyLayout31\">\n                                <div class=\"fly-layout1-header\">\n                                    <button type=\"button\" [label]=\"('立即预约'|translate)||'立即预约'\" #button1 name=\"button1\" class=\"bbbb_detailthree_button1\" fly-button></button>\n                                </div>\n                                <div class=\"clearfix fly-content-wrap\">\n                                    <div class=\"fly-layout1-content\">\n                                        <div #flyFlexRow5 name=\"flyFlexRow5\" class=\"bbbb_detailthree_flyFlexRow5\">\n                                            <span #text12 name=\"text12\" class=\"bbbb_detailthree_text12\">咨询时间约</span>\n                                            <span #text13 name=\"text13\" class=\"bbbb_detailthree_text13\">1.5</span>\n                                            <span #text14 name=\"text14\" class=\"bbbb_detailthree_text14\">小时</span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </div>\n                        </div>\n                    </div>\n\n                </div>\n                <div #flyFlexRow9 name=\"flyFlexRow9\" class=\"bbbb_detailthree_flyFlexRow9\">\n                    <span #text16 name=\"text16\" class=\"bbbb_detailthree_text16\">&nbsp;话题要点/大纲</span>\n                    <span #text17 name=\"text17\" class=\"bbbb_detailthree_text17\">互联网的到来确实降低了信息沟通的成本，也在某种程度上完成&nbsp;了资本和资源的全球战略以及重新分配。<br/>但是互联网的诞生不只是对于传统行业”掠夺性“的颠覆，它对于互联网原生世界也有着不可估量的作用。<br/>一方面，互联网降低了时间和空间的沟通成本；但另一方面，互联网的出现却给资讯、社交、购物等这些”生活软件“<br/>提供了有形的介质；类似于手机、电脑等各种处理终端的出现让互联网”物化“成为了人类不可或缺的生活需求。<br/>但也正是因为互联网原生世界社交、购物等对于现实世界的颠覆，才让支付宝、微信、微博、抖音等这种生态孤岛成<br/>为了现实。<br/>一旦它们搞不清楚自己的”界限“，企图越界，不是每一个都能像支付宝一样连接生活缴费，像微信一样成为大杂烩...</span>\n                    <fly-accordion [multiple]=\"true\" #flyAccordion name=\"flyAccordion\">\n\n                        <fly-accordionTab header=\"{{('更多详情'|translate)||'更多详情'}}\" [selected]=\"true\" #flyAccordionTab name=\"flyAccordionTab\">\n\n                        </fly-accordionTab>\n\n                    </fly-accordion>\n\n                </div>\n            </div>\n        </div>\n    </div>\n</form>"
+    }, {
+      "fileName": "detailthree.component.scss",
+      "fileContent": "\n      @import \"./detailthree.component.auto.scss\"\n      "
+    }, {
+      "fileName": "detailthree.component.auto.scss",
+      "fileContent": "\n@import \"src/assets/primeng/resources/sass/_mixins\";\n.bbbb_detailthree_flyFlexRow1{\nwidth:100%;\nheight:40px;\n@include flexbox();\nbackground-color:#211e1e;\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(row);\n@include box-sizing();\n}\n.bbbb_detailthree_text{\nmargin-left:120px;\ncolor:white;\nfont-weight: bold;\nfont-style: italic;\n}\n.bbbb_detailthree_button{\nmargin-left:600px;\npadding-bottom:12px;\n}\n.bbbb_detailthree_text1{\nmargin-left:20px;\ncolor:white;\n}\n.bbbb_detailthree_blankContainer{\nmargin-left:120px;\nwidth:77%;\nheight:150px;\n}\n.bbbb_detailthree_flyLayout4-3{\n@include border-radius(10px);\nbackground-color:#2b51d8;\n}\n.bbbb_detailthree_blankContainer2{\nwidth:100px;\nheight:100px;\n}\n.bbbb_detailthree_flyImg{\nwidth:100%;\n}\n.bbbb_detailthree_blankContainer3{\nmargin-left:-190px;\nwidth:100%;\n}\n.bbbb_detailthree_text2{\nwidth:70%;\ncolor:white;\n}\n.bbbb_detailthree_text3{\nwidth:70%;\ncolor:#ff5300;\n}\n.bbbb_detailthree_flyFlexRow{\nheight:40px;\n@include flexbox();\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(row);\n@include box-sizing();\n}\n.bbbb_detailthree_flyImg1{\npadding-top:2.5px;\npadding-left:0px;\nwidth:30%;\n}\n.bbbb_detailthree_text4{\nmargin-left:-58px;\ncolor:white;\n}\n.bbbb_detailthree_text5{\ncolor:#ff7000;\nfont-weight: bold;\n}\n.bbbb_detailthree_text6{\nmargin-left:-10px;\ncolor:white;\n}\n.bbbb_detailthree_text7{\nmargin-left:-10px;\ncolor:#ff6600;\nfont-weight: bold;\nfont-style: italic;\n}\n.bbbb_detailthree_text8{\nmargin-left:-10px;\ncolor:white;\n}\n.bbbb_detailthree_blankContainer4{\nmargin-left:-190px;\n}\n.bbbb_detailthree_flyFlexRow2{\nwidth:100%;\nheight:40px;\n@include flexbox();\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(row);\n@include box-sizing();\ncolor:white;\n}\n.bbbb_detailthree_flyImg2{\npadding-top:1px;\npadding-left:0px;\nwidth:23%;\n}\n.bbbb_detailthree_text9{\nmargin-left:-65px;\n}\n.bbbb_detailthree_flyFlexRow3{\nwidth:100%;\nheight:40px;\n@include flexbox();\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(row);\n@include box-sizing();\ncolor:white;\n}\n.bbbb_detailthree_flyImg3{\npadding-top:1px;\npadding-left:0px;\nwidth:23%;\n}\n.bbbb_detailthree_text10{\nmargin-left:-65px;\n}\n.bbbb_detailthree_flyFlexRow4{\nwidth:100%;\nheight:40px;\n@include flexbox();\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(row);\n@include box-sizing();\n}\n.bbbb_detailthree_flyImg4{\npadding-top:1px;\npadding-left:0px;\nwidth:23%;\n}\n.bbbb_detailthree_text11{\nmargin-left:-65px;\ncolor:white;\n}\n.bbbb_detailthree_blankContainer1{\nmargin-left:120px;\nwidth:77%;\nheight:600px;\n}\n.bbbb_detailthree_flyFlexRow6{\nwidth:100%;\nheight:110px;\n@include flexbox();\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(column);\n@include box-sizing();\n}\n.bbbb_detailthree_flyLayout48{\nheight:70px;\nborder-bottom:solid 1px #b6b2b2 ;\n}\n.bbbb_detailthree_blankContainer6{\nwidth:200%;\nheight:40px;\n}\n.bbbb_detailthree_text15{\nfont-weight: bold;\n}\n.bbbb_detailthree_blankContainer7{\nmargin-left:300px;\nwidth:50%;\n@include flex-direction(column);\n}\n.bbbb_detailthree_flyLayout31{\nmargin-top:-20px;\n}\n.bbbb_detailthree_blankContainer5{\nheight:30px;\n}\n.bbbb_detailthree_button1{\nmargin-left:85px;\npadding-right:40px;\npadding-bottom:10px;\npadding-left:40px;\n@include border-radius(20px);\nbackground-color:#005eff;\n}\n.bbbb_detailthree_blankContainer8{\n@include flex-direction(row);\n}\n.bbbb_detailthree_flyFlexRow5{\nwidth:100%;\nheight:40px;\n@include flexbox();\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(row);\n@include box-sizing();\n}\n.bbbb_detailthree_text12{\nmargin-top:-60px;\nmargin-left:85px;\n}\n.bbbb_detailthree_text13{\nmargin-top:-60px;\nmargin-left:-10px;\ncolor:#ff5c00;\n}\n.bbbb_detailthree_text14{\nmargin-top:-60px;\nmargin-left:-10px;\n}\n.bbbb_detailthree_flyFlexRow9{\nmargin-top:-30px;\nwidth:100%;\nheight:400px;\n@include flexbox();\nflex-grow:1;\nflex-shrink:1;\nflex-basis:100%;\n@include flex-direction(column);\n@include box-sizing();\n}\n.bbbb_detailthree_text16{\nmargin-left:6px;\nwidth:100%;\nheight:30px;\nfont-weight: bold;\n}\n.bbbb_detailthree_text17{\nmargin-left:10px;\n}\n@media(max-width: 640px){\n                        .bbbb_detailthree_flyFlexRow1{\n@include box-sizing();\n}\n\n\n                        .bbbb_detailthree_flyFlexRow{\n@include box-sizing();\n}\n\n\n                        .bbbb_detailthree_flyFlexRow2{\n@include box-sizing();\n}\n\n\n                        .bbbb_detailthree_flyFlexRow3{\n@include box-sizing();\n}\n\n\n                        .bbbb_detailthree_flyFlexRow4{\n@include box-sizing();\n}\n\n\n                        .bbbb_detailthree_flyFlexRow6{\n@include box-sizing();\n}\n\n\n                        .bbbb_detailthree_flyFlexRow5{\n@include box-sizing();\n}\n\n\n                        .bbbb_detailthree_flyFlexRow9{\n@include box-sizing();\n}\n}\n    "
+    }, {
+      "fileName": "detailthree.component.config.js",
+      "fileContent": "module.exports = function() {\n    return {\n        references: {\n\n        }\n\n\n    }\n}"
+    }, {
+      "fileName": "detailthree.component.translate.ts",
+      "fileContent": "import {\n    TranslateService\n} from \"@ngx-translate/core\";\n\nexport const translateFn = function translateFn() {\n    return function(TranslateService: TranslateService) {\n        let config = {}\n\n        for (let language of Object.keys(config)) {\n            let translates = config[language];\n            TranslateService.setTranslation(language, translates, true);\n        }\n    }\n}"
+    }],
+    "frontResources": []
+  },
+  "usingObjects": [],
+  "attrs": [{
+    "componentName": "Stage",
+    "general": {
+      "$$id": "stage",
+      "$$type": "Stage",
+      "$$isContainer": true,
+      "$$group": "",
+      "$$label": "文本标签",
+      "$$removeable": false,
+      "$$combineAble": false,
+      "$$maxChildrens": 0,
+      "$$childrenEditable": true,
+      "$$dragable": false,
+      "$$border": 0,
+      "$$attr": {
+        "variableKey": "",
+        "varClassCode": "",
+        "transformObjectCode": "",
+        "fieldCode": "",
+        "type": ""
+      },
+      "$$disabled": false,
+      "$$placeholder": "请输入",
+      "$$class": "",
+      "$$events": {
+        "keypress": []
+      },
+      "$$variableName": "stage",
+      "$$routerConfig": {
+        "pageInfo": {},
+        "params": []
+      },
+      "$$dropable": true,
+      "$$readonly": false,
+      "$$alias": "",
+      "$$connections": {
+        "beRelatives": [],
+        "relatives": {}
+      },
+      "$$transform": {
+        "to": [],
+        "from": ""
+      },
+      "$$exAttrs": [{
+        "key": "*ngIf",
+        "label": "是否显示",
+        "expression": "",
+        "canPlaceAtLabel": true,
+        "tooltip": "*ngIf=\"boolean\""
+      }, {
+        "key": "*ngFor",
+        "label": "*ngFor",
+        "expression": "",
+        "canPlaceAtLabel": true,
+        "tooltip": "*ngFor=\"let rowData of arrdata\""
+      }],
+      "$$isVisual": false,
+      "$$validation": {
+        "required": false
+      },
+      "$$style": {
+        "0": {
+          "useShadow": false,
+          "shadowInsert": ""
+        },
+        "1": {}
+      },
+      "$$checkStatus": {},
+      "$$visible": true,
+      "$$mobileStyle": {},
+      "columnConfig": {},
+      "$$$wordWidth": "ui-word-width-4",
+      "$$annotation": "diy版本1.0"
+    },
+    "children": [{
+      "componentName": "FlyFlexRow",
+      "general": {
+        "$$id": "flyFlexRow1",
+        "$$type": "FlyFlexRow",
+        "$$isContainer": false,
+        "$$group": "",
+        "$$label": "文本标签",
+        "$$removeable": true,
+        "$$combineAble": false,
+        "$$maxChildrens": 0,
+        "$$childrenEditable": true,
+        "$$dragable": true,
+        "$$border": 0,
+        "$$attr": {
+          "variableKey": "",
+          "varClassCode": "",
+          "transformObjectCode": "",
+          "fieldCode": "",
+          "type": ""
+        },
+        "$$disabled": false,
+        "$$placeholder": "请输入",
+        "$$class": "",
+        "$$events": {
+          "click": [],
+          "mousemove": [],
+          "mouseleave": [],
+          "mouseenter": [],
+          "mousedown": [],
+          "mouseup": [],
+          "mouseover": [],
+          "mouseout": []
+        },
+        "$$variableName": "flyFlexRow1",
+        "$$routerConfig": {
+          "pageInfo": {},
+          "params": []
+        },
+        "$$dropable": true,
+        "$$readonly": false,
+        "$$alias": "",
+        "$$connections": {
+          "beRelatives": [],
+          "relatives": {}
+        },
+        "$$transform": {
+          "to": [],
+          "from": ""
+        },
+        "$$exAttrs": [{
+          "key": "*ngIf",
+          "label": "是否显示",
+          "expression": "",
+          "canPlaceAtLabel": true,
+          "tooltip": "*ngIf=\"boolean\""
+        }, {
+          "key": "*ngFor",
+          "label": "*ngFor",
+          "expression": "",
+          "canPlaceAtLabel": true,
+          "tooltip": "*ngFor=\"let rowData of arrdata\""
+        }],
+        "$$isVisual": false,
+        "$$validation": {
+          "required": false
+        },
+        "$$style": {
+          "0": {
+            "width": "100%",
+            "height": "40px",
+            "direction": "row",
+            "display": "flex",
+            "flexGrow": "1",
+            "flexShrink": "1",
+            "flexBasis": "100%",
+            "useShadow": false,
+            "shadowInsert": "",
+            "backgroundColor": "#211e1e"
+          },
+          "1": {}
+        },
+        "$$checkStatus": {},
+        "$$visible": true,
+        "$$mobileStyle": {},
+        "columnConfig": {},
+        "hasFixedHeight": false
+      },
+      "children": [{
+        "componentName": "Text",
+        "general": {
+          "$$id": "text",
+          "$$type": "Text",
+          "$$isContainer": false,
+          "$$group": "",
+          "$$label": "",
+          "$$removeable": true,
+          "$$combineAble": true,
+          "$$maxChildrens": 0,
+          "$$childrenEditable": false,
+          "$$dragable": true,
+          "$$border": 10,
+          "$$attr": {
+            "variableKey": "",
+            "varClassCode": "",
+            "transformObjectCode": "",
+            "fieldCode": "",
+            "type": ""
+          },
+          "$$disabled": false,
+          "$$placeholder": "请输入",
+          "$$class": "",
+          "$$events": {
+            "click": []
+          },
+          "$$variableName": "text",
+          "$$routerConfig": {
+            "pageInfo": {},
+            "params": []
+          },
+          "$$dropable": true,
+          "$$readonly": false,
+          "$$alias": "",
+          "$$connections": {
+            "beRelatives": [],
+            "relatives": {}
+          },
+          "$$transform": {
+            "to": [],
+            "from": ""
+          },
+          "$$exAttrs": [{
+            "key": "*ngIf",
+            "label": "是否显示",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngIf=\"boolean\""
+          }, {
+            "key": "*ngFor",
+            "label": "*ngFor",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngFor=\"let rowData of arrdata\""
+          }],
+          "$$isVisual": false,
+          "$$validation": {
+            "required": false
+          },
+          "$$style": {
+            "0": {
+              "useShadow": false,
+              "shadowInsert": "",
+              "fontStyle": "italic",
+              "fontWeight": "bold",
+              "color": "white",
+              "marginLeft": "120px"
+            },
+            "1": {}
+          },
+          "$$checkStatus": {},
+          "$$visible": true,
+          "$$mobileStyle": {},
+          "columnConfig": {},
+          "type": "span",
+          "content": "行家平台",
+          "aType": "link",
+          "textAlign": "",
+          "isDot": false,
+          "dotHeight": true,
+          "$$default": "示例文本",
+          "$$$tooltipPosition": "top",
+          "labelPosition": "",
+          "showError": true,
+          "showSuccess": true,
+          "$$canTransformTo": [{
+            "label": "文本输入框",
+            "value": "InputText"
+          }, {
+            "label": "多行输入框",
+            "value": "TextArea"
+          }, {
+            "label": "富文本",
+            "value": "Editor"
+          }],
+          "requiredRed": false,
+          "NotTransference": false
+        },
+        "children": []
+      }, {
+        "componentName": "Button",
+        "general": {
+          "$$id": "button",
+          "$$type": "Button",
+          "$$isContainer": false,
+          "$$group": "",
+          "$$label": "成为行家",
+          "$$removeable": true,
+          "$$combineAble": false,
+          "$$maxChildrens": 0,
+          "$$childrenEditable": false,
+          "$$dragable": true,
+          "$$border": 0,
+          "$$attr": {
+            "variableKey": "",
+            "varClassCode": "",
+            "transformObjectCode": "",
+            "fieldCode": "",
+            "type": ""
+          },
+          "$$disabled": false,
+          "$$placeholder": "请输入",
+          "$$class": "",
+          "$$events": {
+            "click": []
+          },
+          "$$variableName": "button",
+          "$$routerConfig": {
+            "pageInfo": {},
+            "params": []
+          },
+          "$$dropable": true,
+          "$$readonly": false,
+          "$$alias": "",
+          "$$connections": {
+            "beRelatives": [],
+            "relatives": {}
+          },
+          "$$transform": {
+            "to": [],
+            "from": ""
+          },
+          "$$exAttrs": [{
+            "key": "*ngIf",
+            "label": "是否显示",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngIf=\"boolean\""
+          }, {
+            "key": "*ngFor",
+            "label": "*ngFor",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngFor=\"let rowData of arrdata\""
+          }, {
+            "key": "[disabled]",
+            "label": "不可编辑",
+            "expression": "",
+            "canPlaceAtLabel": false,
+            "tooltip": "[disabled]=\"boolean\""
+          }, {
+            "key": "[loading]",
+            "label": "加载状态",
+            "expression": "",
+            "canPlaceAtLabel": false,
+            "tooltip": "[loading]=\"boolean\""
+          }, {
+            "key": "[color]",
+            "label": "颜色",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": ""
+          }, {
+            "key": "[icon]",
+            "label": "图标",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": ""
+          }, {
+            "key": "[iconPosition]",
+            "label": "图标位置",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": ""
+          }],
+          "$$isVisual": false,
+          "$$validation": {
+            "required": false
+          },
+          "$$style": {
+            "0": {
+              "useShadow": false,
+              "shadowInsert": "",
+              "marginLeft": "600px",
+              "paddingBottom": "12px"
+            },
+            "1": {}
+          },
+          "$$checkStatus": {},
+          "$$visible": true,
+          "$$mobileStyle": {},
+          "columnConfig": {},
+          "color": "",
+          "icon": "",
+          "iconPosition": "left",
+          "$$$tooltipPosition": "top",
+          "round": false
+        },
+        "children": []
+      }, {
+        "componentName": "Text",
+        "general": {
+          "$$id": "text1",
+          "$$type": "Text",
+          "$$isContainer": false,
+          "$$group": "",
+          "$$label": "",
+          "$$removeable": true,
+          "$$combineAble": true,
+          "$$maxChildrens": 0,
+          "$$childrenEditable": false,
+          "$$dragable": true,
+          "$$border": 10,
+          "$$attr": {
+            "variableKey": "",
+            "varClassCode": "",
+            "transformObjectCode": "",
+            "fieldCode": "",
+            "type": ""
+          },
+          "$$disabled": false,
+          "$$placeholder": "请输入",
+          "$$class": "",
+          "$$events": {
+            "click": []
+          },
+          "$$variableName": "text1",
+          "$$routerConfig": {
+            "pageInfo": {},
+            "params": []
+          },
+          "$$dropable": true,
+          "$$readonly": false,
+          "$$alias": "",
+          "$$connections": {
+            "beRelatives": [],
+            "relatives": {}
+          },
+          "$$transform": {
+            "to": [],
+            "from": ""
+          },
+          "$$exAttrs": [{
+            "key": "*ngIf",
+            "label": "是否显示",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngIf=\"boolean\""
+          }, {
+            "key": "*ngFor",
+            "label": "*ngFor",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngFor=\"let rowData of arrdata\""
+          }],
+          "$$isVisual": false,
+          "$$validation": {
+            "required": false
+          },
+          "$$style": {
+            "0": {
+              "useShadow": false,
+              "shadowInsert": "",
+              "color": "white",
+              "marginLeft": "20px"
+            },
+            "1": {}
+          },
+          "$$checkStatus": {},
+          "$$visible": true,
+          "$$mobileStyle": {},
+          "columnConfig": {},
+          "type": "span",
+          "content": "v_zkzhou(周坤）",
+          "aType": "link",
+          "textAlign": "",
+          "isDot": false,
+          "dotHeight": true,
+          "$$default": "示例文本",
+          "$$$tooltipPosition": "top",
+          "labelPosition": "",
+          "showError": true,
+          "showSuccess": true,
+          "$$canTransformTo": [{
+            "label": "文本输入框",
+            "value": "InputText"
+          }, {
+            "label": "多行输入框",
+            "value": "TextArea"
+          }, {
+            "label": "富文本",
+            "value": "Editor"
+          }],
+          "requiredRed": false,
+          "NotTransference": false
+        },
+        "children": []
+      }]
+    }, {
+      "componentName": "FlyLayout3",
+      "general": {
+        "$$id": "flyLayout3",
+        "$$type": "FlyLayout3",
+        "$$isContainer": false,
+        "$$group": "",
+        "$$label": "文本标签",
+        "$$removeable": true,
+        "$$combineAble": false,
+        "$$maxChildrens": 0,
+        "$$childrenEditable": false,
+        "$$dragable": true,
+        "$$border": 0,
+        "$$attr": {
+          "variableKey": "",
+          "varClassCode": "",
+          "transformObjectCode": "",
+          "fieldCode": "",
+          "type": ""
+        },
+        "$$disabled": false,
+        "$$placeholder": "请输入",
+        "$$class": "",
+        "$$events": {},
+        "$$variableName": "flyLayout3",
+        "$$routerConfig": {
+          "pageInfo": {},
+          "params": []
+        },
+        "$$dropable": true,
+        "$$readonly": false,
+        "$$alias": "",
+        "$$connections": {
+          "beRelatives": [],
+          "relatives": {}
+        },
+        "$$transform": {
+          "to": [],
+          "from": ""
+        },
+        "$$exAttrs": [{
+          "key": "*ngIf",
+          "label": "是否显示",
+          "expression": "",
+          "canPlaceAtLabel": true,
+          "tooltip": "*ngIf=\"boolean\""
+        }, {
+          "key": "*ngFor",
+          "label": "*ngFor",
+          "expression": "",
+          "canPlaceAtLabel": true,
+          "tooltip": "*ngFor=\"let rowData of arrdata\""
+        }],
+        "$$isVisual": false,
+        "$$validation": {
+          "required": false
+        },
+        "$$style": {
+          "0": {
+            "useShadow": false,
+            "shadowInsert": ""
+          },
+          "1": {}
+        },
+        "$$checkStatus": {},
+        "$$visible": true,
+        "$$mobileStyle": {},
+        "columnConfig": {},
+        "toggleable": false,
+        "collapsed": false
+      },
+      "children": [{
+        "componentName": "BlankContainer",
+        "general": {
+          "$$id": "blankContainer",
+          "$$type": "BlankContainer",
+          "$$isContainer": false,
+          "$$group": "",
+          "$$label": "文本标签",
+          "$$removeable": false,
+          "$$combineAble": false,
+          "$$maxChildrens": 0,
+          "$$childrenEditable": true,
+          "$$dragable": false,
+          "$$border": 0,
+          "$$attr": {
+            "variableKey": "",
+            "varClassCode": "",
+            "transformObjectCode": "",
+            "fieldCode": "",
+            "type": ""
+          },
+          "$$disabled": false,
+          "$$placeholder": "请输入",
+          "$$class": "",
+          "$$events": {},
+          "$$variableName": "blankContainer",
+          "$$routerConfig": {
+            "pageInfo": {},
+            "params": []
+          },
+          "$$dropable": true,
+          "$$readonly": false,
+          "$$alias": "",
+          "$$connections": {
+            "beRelatives": [],
+            "relatives": {}
+          },
+          "$$transform": {
+            "to": [],
+            "from": ""
+          },
+          "$$exAttrs": [{
+            "key": "*ngIf",
+            "label": "是否显示",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngIf=\"boolean\""
+          }, {
+            "key": "*ngFor",
+            "label": "*ngFor",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngFor=\"let rowData of arrdata\""
+          }],
+          "$$isVisual": false,
+          "$$validation": {
+            "required": false
+          },
+          "$$style": {
+            "0": {
+              "useShadow": false,
+              "shadowInsert": "",
+              "width": "77%",
+              "height": "150px",
+              "marginLeft": "120px"
+            },
+            "1": {}
+          },
+          "$$checkStatus": {},
+          "$$visible": true,
+          "$$mobileStyle": {},
+          "columnConfig": {}
+        },
+        "children": [{
+          "componentName": "FlyLayout43",
+          "general": {
+            "$$id": "flyLayout43",
+            "$$type": "FlyLayout43",
+            "$$isContainer": false,
+            "$$group": "",
+            "$$label": "文本标签",
+            "$$removeable": true,
+            "$$combineAble": false,
+            "$$maxChildrens": 0,
+            "$$childrenEditable": false,
+            "$$dragable": true,
+            "$$border": 0,
+            "$$attr": {
+              "variableKey": "",
+              "varClassCode": "",
+              "transformObjectCode": "",
+              "fieldCode": "",
+              "type": ""
+            },
+            "$$disabled": false,
+            "$$placeholder": "请输入",
+            "$$class": "",
+            "$$events": {},
+            "$$variableName": "flyLayout43",
+            "$$routerConfig": {
+              "pageInfo": {},
+              "params": []
+            },
+            "$$dropable": true,
+            "$$readonly": false,
+            "$$alias": "",
+            "$$connections": {
+              "beRelatives": [],
+              "relatives": {}
+            },
+            "$$transform": {
+              "to": [],
+              "from": ""
+            },
+            "$$exAttrs": [{
+              "key": "*ngIf",
+              "label": "是否显示",
+              "expression": "",
+              "canPlaceAtLabel": true,
+              "tooltip": "*ngIf=\"boolean\""
+            }, {
+              "key": "*ngFor",
+              "label": "*ngFor",
+              "expression": "",
+              "canPlaceAtLabel": true,
+              "tooltip": "*ngFor=\"let rowData of arrdata\""
+            }],
+            "$$isVisual": false,
+            "$$validation": {
+              "required": false
+            },
+            "$$style": {
+              "0": {
+                "useShadow": false,
+                "shadowInsert": "",
+                "backgroundColor": "#2b51d8",
+                "borderRadius": 10
+              },
+              "1": {}
+            },
+            "$$checkStatus": {
+              "borderRadiusLastClick": "borderRadiusAll"
+            },
+            "$$visible": true,
+            "$$mobileStyle": {},
+            "columnConfig": {},
+            "toggleable": false,
+            "collapsed": false
+          },
+          "children": [{
+            "componentName": "BlankContainer",
+            "general": {
+              "$$id": "blankContainer2",
+              "$$type": "BlankContainer",
+              "$$isContainer": false,
+              "$$group": "",
+              "$$label": "文本标签",
+              "$$removeable": false,
+              "$$combineAble": false,
+              "$$maxChildrens": 0,
+              "$$childrenEditable": true,
+              "$$dragable": false,
+              "$$border": 0,
+              "$$attr": {
+                "variableKey": "",
+                "varClassCode": "",
+                "transformObjectCode": "",
+                "fieldCode": "",
+                "type": ""
+              },
+              "$$disabled": false,
+              "$$placeholder": "请输入",
+              "$$class": "",
+              "$$events": {},
+              "$$variableName": "blankContainer2",
+              "$$routerConfig": {
+                "pageInfo": {},
+                "params": []
+              },
+              "$$dropable": true,
+              "$$readonly": false,
+              "$$alias": "",
+              "$$connections": {
+                "beRelatives": [],
+                "relatives": {}
+              },
+              "$$transform": {
+                "to": [],
+                "from": ""
+              },
+              "$$exAttrs": [{
+                "key": "*ngIf",
+                "label": "是否显示",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngIf=\"boolean\""
+              }, {
+                "key": "*ngFor",
+                "label": "*ngFor",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngFor=\"let rowData of arrdata\""
+              }],
+              "$$isVisual": false,
+              "$$validation": {
+                "required": false
+              },
+              "$$style": {
+                "0": {
+                  "useShadow": false,
+                  "shadowInsert": "",
+                  "width": "100px",
+                  "height": "100px"
+                },
+                "1": {}
+              },
+              "$$checkStatus": {},
+              "$$visible": true,
+              "$$mobileStyle": {},
+              "columnConfig": {}
+            },
+            "children": [{
+              "componentName": "FlyImg",
+              "general": {
+                "$$id": "flyImg",
+                "$$type": "FlyImg",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "",
+                "$$removeable": true,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": false,
+                "$$dragable": true,
+                "$$border": 10,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {},
+                "$$variableName": "flyImg",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "useShadow": false,
+                    "shadowInsert": "",
+                    "width": "100%",
+                    "paddingBottom": ""
+                  },
+                  "1": {},
+                  "width": 50,
+                  "height": 50
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "max": 0,
+                "$$canTransformTo": [{
+                  "label": "文件上传",
+                  "value": "Upload"
+                }, {
+                  "label": "图片轮播",
+                  "value": "FlyCarousel"
+                }],
+                "imageSize": [{
+                  "width": 0,
+                  "height": 0
+                }]
+              },
+              "children": []
+            }]
+          }, {
+            "componentName": "BlankContainer",
+            "general": {
+              "$$id": "blankContainer3",
+              "$$type": "BlankContainer",
+              "$$isContainer": false,
+              "$$group": "",
+              "$$label": "文本标签",
+              "$$removeable": false,
+              "$$combineAble": false,
+              "$$maxChildrens": 0,
+              "$$childrenEditable": true,
+              "$$dragable": false,
+              "$$border": 0,
+              "$$attr": {
+                "variableKey": "",
+                "varClassCode": "",
+                "transformObjectCode": "",
+                "fieldCode": "",
+                "type": ""
+              },
+              "$$disabled": false,
+              "$$placeholder": "请输入",
+              "$$class": "",
+              "$$events": {},
+              "$$variableName": "blankContainer3",
+              "$$routerConfig": {
+                "pageInfo": {},
+                "params": []
+              },
+              "$$dropable": true,
+              "$$readonly": false,
+              "$$alias": "",
+              "$$connections": {
+                "beRelatives": [],
+                "relatives": {}
+              },
+              "$$transform": {
+                "to": [],
+                "from": ""
+              },
+              "$$exAttrs": [{
+                "key": "*ngIf",
+                "label": "是否显示",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngIf=\"boolean\""
+              }, {
+                "key": "*ngFor",
+                "label": "*ngFor",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngFor=\"let rowData of arrdata\""
+              }],
+              "$$isVisual": false,
+              "$$validation": {
+                "required": false
+              },
+              "$$style": {
+                "0": {
+                  "useShadow": false,
+                  "shadowInsert": "",
+                  "paddingLeft": "",
+                  "marginLeft": "-190px",
+                  "width": "100%"
+                },
+                "1": {}
+              },
+              "$$checkStatus": {},
+              "$$visible": true,
+              "$$mobileStyle": {},
+              "columnConfig": {}
+            },
+            "children": [{
+              "componentName": "Text",
+              "general": {
+                "$$id": "text2",
+                "$$type": "Text",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "",
+                "$$removeable": true,
+                "$$combineAble": true,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": false,
+                "$$dragable": true,
+                "$$border": 10,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {
+                  "click": []
+                },
+                "$$variableName": "text2",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "useShadow": false,
+                    "shadowInsert": "",
+                    "width": "70%",
+                    "color": "white"
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "type": "span",
+                "content": "Shuhaoou（欧书豪）",
+                "aType": "link",
+                "textAlign": "",
+                "isDot": false,
+                "dotHeight": true,
+                "$$default": "示例文本",
+                "$$$tooltipPosition": "top",
+                "labelPosition": "",
+                "showError": true,
+                "showSuccess": true,
+                "$$canTransformTo": [{
+                  "label": "文本输入框",
+                  "value": "InputText"
+                }, {
+                  "label": "多行输入框",
+                  "value": "TextArea"
+                }, {
+                  "label": "富文本",
+                  "value": "Editor"
+                }],
+                "requiredRed": false,
+                "NotTransference": false
+              },
+              "children": []
+            }, {
+              "componentName": "Text",
+              "general": {
+                "$$id": "text3",
+                "$$type": "Text",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "",
+                "$$removeable": true,
+                "$$combineAble": true,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": false,
+                "$$dragable": true,
+                "$$border": 10,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {
+                  "click": []
+                },
+                "$$variableName": "text3",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "useShadow": false,
+                    "shadowInsert": "",
+                    "width": "70%",
+                    "color": "#ff5300"
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "type": "span",
+                "content": "总办 CEO",
+                "aType": "link",
+                "textAlign": "",
+                "isDot": false,
+                "dotHeight": true,
+                "$$default": "示例文本",
+                "$$$tooltipPosition": "top",
+                "labelPosition": "",
+                "showError": true,
+                "showSuccess": true,
+                "$$canTransformTo": [{
+                  "label": "文本输入框",
+                  "value": "InputText"
+                }, {
+                  "label": "多行输入框",
+                  "value": "TextArea"
+                }, {
+                  "label": "富文本",
+                  "value": "Editor"
+                }],
+                "requiredRed": false,
+                "NotTransference": false
+              },
+              "children": []
+            }, {
+              "componentName": "FlyFlexRow",
+              "general": {
+                "$$id": "flyFlexRow",
+                "$$type": "FlyFlexRow",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "文本标签",
+                "$$removeable": true,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": true,
+                "$$dragable": true,
+                "$$border": 0,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {
+                  "click": [],
+                  "mousemove": [],
+                  "mouseleave": [],
+                  "mouseenter": [],
+                  "mousedown": [],
+                  "mouseup": [],
+                  "mouseover": [],
+                  "mouseout": []
+                },
+                "$$variableName": "flyFlexRow",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "width": "",
+                    "height": "40px",
+                    "direction": "row",
+                    "display": "flex",
+                    "flexGrow": "1",
+                    "flexShrink": "1",
+                    "flexBasis": "100%",
+                    "useShadow": false,
+                    "shadowInsert": ""
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "hasFixedHeight": false
+              },
+              "children": [{
+                "componentName": "FlyImg",
+                "general": {
+                  "$$id": "flyImg1",
+                  "$$type": "FlyImg",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": false,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {},
+                  "$$variableName": "flyImg1",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "paddingLeft": "0px",
+                      "paddingTop": "2.5px",
+                      "width": "30%"
+                    },
+                    "1": {},
+                    "width": 50,
+                    "height": 50
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "max": 0,
+                  "$$canTransformTo": [{
+                    "label": "文件上传",
+                    "value": "Upload"
+                  }, {
+                    "label": "图片轮播",
+                    "value": "FlyCarousel"
+                  }],
+                  "imageSize": [{
+                    "width": 0,
+                    "height": 0
+                  }]
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text4",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text4",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginLeft": "-58px",
+                      "color": "white"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "北京",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text5",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text5",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "color": "#ff7000",
+                      "fontWeight": "bold"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "12",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text6",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text6",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginLeft": "-10px",
+                      "color": "white"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "人见过，评分",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text7",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text7",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginLeft": "-10px",
+                      "color": "#ff6600",
+                      "fontWeight": "bold",
+                      "fontStyle": "italic"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "9.2",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text8",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text8",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginLeft": "-10px",
+                      "color": "white"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "分",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }]
+            }]
+          }, {
+            "componentName": "BlankContainer",
+            "general": {
+              "$$id": "blankContainer4",
+              "$$type": "BlankContainer",
+              "$$isContainer": false,
+              "$$group": "",
+              "$$label": "文本标签",
+              "$$removeable": false,
+              "$$combineAble": false,
+              "$$maxChildrens": 0,
+              "$$childrenEditable": true,
+              "$$dragable": false,
+              "$$border": 0,
+              "$$attr": {
+                "variableKey": "",
+                "varClassCode": "",
+                "transformObjectCode": "",
+                "fieldCode": "",
+                "type": ""
+              },
+              "$$disabled": false,
+              "$$placeholder": "请输入",
+              "$$class": "",
+              "$$events": {},
+              "$$variableName": "blankContainer4",
+              "$$routerConfig": {
+                "pageInfo": {},
+                "params": []
+              },
+              "$$dropable": true,
+              "$$readonly": false,
+              "$$alias": "",
+              "$$connections": {
+                "beRelatives": [],
+                "relatives": {}
+              },
+              "$$transform": {
+                "to": [],
+                "from": ""
+              },
+              "$$exAttrs": [{
+                "key": "*ngIf",
+                "label": "是否显示",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngIf=\"boolean\""
+              }, {
+                "key": "*ngFor",
+                "label": "*ngFor",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngFor=\"let rowData of arrdata\""
+              }],
+              "$$isVisual": false,
+              "$$validation": {
+                "required": false
+              },
+              "$$style": {
+                "0": {
+                  "useShadow": false,
+                  "shadowInsert": "",
+                  "marginLeft": "-190px"
+                },
+                "1": {}
+              },
+              "$$checkStatus": {},
+              "$$visible": true,
+              "$$mobileStyle": {},
+              "columnConfig": {}
+            },
+            "children": [{
+              "componentName": "FlyFlexRow",
+              "general": {
+                "$$id": "flyFlexRow2",
+                "$$type": "FlyFlexRow",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "文本标签",
+                "$$removeable": true,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": true,
+                "$$dragable": true,
+                "$$border": 0,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {
+                  "click": [],
+                  "mousemove": [],
+                  "mouseleave": [],
+                  "mouseenter": [],
+                  "mousedown": [],
+                  "mouseup": [],
+                  "mouseover": [],
+                  "mouseout": []
+                },
+                "$$variableName": "flyFlexRow2",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "width": "100%",
+                    "height": "40px",
+                    "direction": "row",
+                    "display": "flex",
+                    "flexGrow": "1",
+                    "flexShrink": "1",
+                    "flexBasis": "100%",
+                    "useShadow": false,
+                    "shadowInsert": "",
+                    "color": "white",
+                    "_cssText": "flyStyle{\n \n}",
+                    "cssText": {}
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "hasFixedHeight": false
+              },
+              "children": [{
+                "componentName": "FlyImg",
+                "general": {
+                  "$$id": "flyImg2",
+                  "$$type": "FlyImg",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": false,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {},
+                  "$$variableName": "flyImg2",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "paddingLeft": "0px",
+                      "paddingTop": "1px",
+                      "width": "23%",
+                      "paddingBottom": ""
+                    },
+                    "1": {},
+                    "width": 50,
+                    "height": 50
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "max": 0,
+                  "$$canTransformTo": [{
+                    "label": "文件上传",
+                    "value": "Upload"
+                  }, {
+                    "label": "图片轮播",
+                    "value": "FlyCarousel"
+                  }],
+                  "imageSize": [{
+                    "width": 0,
+                    "height": 0
+                  }]
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text9",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text9",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginLeft": "-65px"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "入职时间：2016年03月06日",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }]
+            }, {
+              "componentName": "FlyFlexRow",
+              "general": {
+                "$$id": "flyFlexRow3",
+                "$$type": "FlyFlexRow",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "文本标签",
+                "$$removeable": true,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": true,
+                "$$dragable": true,
+                "$$border": 0,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {
+                  "click": [],
+                  "mousemove": [],
+                  "mouseleave": [],
+                  "mouseenter": [],
+                  "mousedown": [],
+                  "mouseup": [],
+                  "mouseover": [],
+                  "mouseout": []
+                },
+                "$$variableName": "flyFlexRow3",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "width": "100%",
+                    "height": "40px",
+                    "direction": "row",
+                    "display": "flex",
+                    "flexGrow": "1",
+                    "flexShrink": "1",
+                    "flexBasis": "100%",
+                    "useShadow": false,
+                    "shadowInsert": "",
+                    "color": "white",
+                    "_cssText": "flyStyle{\n \n}",
+                    "cssText": {}
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "hasFixedHeight": false
+              },
+              "children": [{
+                "componentName": "FlyImg",
+                "general": {
+                  "$$id": "flyImg3",
+                  "$$type": "FlyImg",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": false,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {},
+                  "$$variableName": "flyImg3",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "paddingLeft": "0px",
+                      "paddingTop": "1px",
+                      "width": "23%",
+                      "_cssText": "flyStyle{\n \n}",
+                      "cssText": {}
+                    },
+                    "1": {},
+                    "width": 50,
+                    "height": 50
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "max": 0,
+                  "$$canTransformTo": [{
+                    "label": "文件上传",
+                    "value": "Upload"
+                  }, {
+                    "label": "图片轮播",
+                    "value": "FlyCarousel"
+                  }],
+                  "imageSize": [{
+                    "width": 0,
+                    "height": 0
+                  }]
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text10",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text10",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginLeft": "-65px"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "职位：高级工程师",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }]
+            }, {
+              "componentName": "FlyFlexRow",
+              "general": {
+                "$$id": "flyFlexRow4",
+                "$$type": "FlyFlexRow",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "文本标签",
+                "$$removeable": true,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": true,
+                "$$dragable": true,
+                "$$border": 0,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {
+                  "click": [],
+                  "mousemove": [],
+                  "mouseleave": [],
+                  "mouseenter": [],
+                  "mousedown": [],
+                  "mouseup": [],
+                  "mouseover": [],
+                  "mouseout": []
+                },
+                "$$variableName": "flyFlexRow4",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "width": "100%",
+                    "height": "40px",
+                    "direction": "row",
+                    "display": "flex",
+                    "flexGrow": "1",
+                    "flexShrink": "1",
+                    "flexBasis": "100%",
+                    "useShadow": false,
+                    "shadowInsert": ""
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "hasFixedHeight": false
+              },
+              "children": [{
+                "componentName": "FlyImg",
+                "general": {
+                  "$$id": "flyImg4",
+                  "$$type": "FlyImg",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": false,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {},
+                  "$$variableName": "flyImg4",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "paddingLeft": "0px",
+                      "paddingTop": "1px",
+                      "width": "23%"
+                    },
+                    "1": {},
+                    "width": 50,
+                    "height": 50
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "max": 0,
+                  "$$canTransformTo": [{
+                    "label": "文件上传",
+                    "value": "Upload"
+                  }, {
+                    "label": "图片轮播",
+                    "value": "FlyCarousel"
+                  }],
+                  "imageSize": [{
+                    "width": 0,
+                    "height": 0
+                  }]
+                },
+                "children": []
+              }, {
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text11",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text11",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginLeft": "-65px",
+                      "color": "white"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "所在团队:S3/腾讯学院/培训运营中心/在线学习平台组",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }]
+            }]
+          }]
+        }]
+      }, {
+        "componentName": "BlankContainer",
+        "general": {
+          "$$id": "blankContainer1",
+          "$$type": "BlankContainer",
+          "$$isContainer": false,
+          "$$group": "",
+          "$$label": "文本标签",
+          "$$removeable": false,
+          "$$combineAble": false,
+          "$$maxChildrens": 0,
+          "$$childrenEditable": true,
+          "$$dragable": false,
+          "$$border": 0,
+          "$$attr": {
+            "variableKey": "",
+            "varClassCode": "",
+            "transformObjectCode": "",
+            "fieldCode": "",
+            "type": ""
+          },
+          "$$disabled": false,
+          "$$placeholder": "请输入",
+          "$$class": "",
+          "$$events": {},
+          "$$variableName": "blankContainer1",
+          "$$routerConfig": {
+            "pageInfo": {},
+            "params": []
+          },
+          "$$dropable": true,
+          "$$readonly": false,
+          "$$alias": "",
+          "$$connections": {
+            "beRelatives": [],
+            "relatives": {}
+          },
+          "$$transform": {
+            "to": [],
+            "from": ""
+          },
+          "$$exAttrs": [{
+            "key": "*ngIf",
+            "label": "是否显示",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngIf=\"boolean\""
+          }, {
+            "key": "*ngFor",
+            "label": "*ngFor",
+            "expression": "",
+            "canPlaceAtLabel": true,
+            "tooltip": "*ngFor=\"let rowData of arrdata\""
+          }],
+          "$$isVisual": false,
+          "$$validation": {
+            "required": false
+          },
+          "$$style": {
+            "0": {
+              "useShadow": false,
+              "shadowInsert": "",
+              "width": "77%",
+              "marginLeft": "120px",
+              "height": "600px"
+            },
+            "1": {}
+          },
+          "$$checkStatus": {},
+          "$$visible": true,
+          "$$mobileStyle": {},
+          "columnConfig": {}
+        },
+        "children": [{
+          "componentName": "FlyFlexRow",
+          "general": {
+            "$$id": "flyFlexRow6",
+            "$$type": "FlyFlexRow",
+            "$$isContainer": false,
+            "$$group": "",
+            "$$label": "文本标签",
+            "$$removeable": true,
+            "$$combineAble": false,
+            "$$maxChildrens": 0,
+            "$$childrenEditable": true,
+            "$$dragable": true,
+            "$$border": 0,
+            "$$attr": {
+              "variableKey": "",
+              "varClassCode": "",
+              "transformObjectCode": "",
+              "fieldCode": "",
+              "type": ""
+            },
+            "$$disabled": false,
+            "$$placeholder": "请输入",
+            "$$class": "",
+            "$$events": {
+              "click": [],
+              "mousemove": [],
+              "mouseleave": [],
+              "mouseenter": [],
+              "mousedown": [],
+              "mouseup": [],
+              "mouseover": [],
+              "mouseout": []
+            },
+            "$$variableName": "flyFlexRow6",
+            "$$routerConfig": {
+              "pageInfo": {},
+              "params": []
+            },
+            "$$dropable": true,
+            "$$readonly": false,
+            "$$alias": "",
+            "$$connections": {
+              "beRelatives": [],
+              "relatives": {}
+            },
+            "$$transform": {
+              "to": [],
+              "from": ""
+            },
+            "$$exAttrs": [{
+              "key": "*ngIf",
+              "label": "是否显示",
+              "expression": "",
+              "canPlaceAtLabel": true,
+              "tooltip": "*ngIf=\"boolean\""
+            }, {
+              "key": "*ngFor",
+              "label": "*ngFor",
+              "expression": "",
+              "canPlaceAtLabel": true,
+              "tooltip": "*ngFor=\"let rowData of arrdata\""
+            }],
+            "$$isVisual": false,
+            "$$validation": {
+              "required": false
+            },
+            "$$style": {
+              "0": {
+                "width": "100%",
+                "height": "110px",
+                "direction": "column",
+                "display": "flex",
+                "flexGrow": "1",
+                "flexShrink": "1",
+                "flexBasis": "100%",
+                "useShadow": false,
+                "shadowInsert": ""
+              },
+              "1": {}
+            },
+            "$$checkStatus": {},
+            "$$visible": true,
+            "$$mobileStyle": {},
+            "columnConfig": {},
+            "hasFixedHeight": false
+          },
+          "children": [{
+            "componentName": "FlyLayout48",
+            "general": {
+              "$$id": "flyLayout48",
+              "$$type": "FlyLayout48",
+              "$$isContainer": false,
+              "$$group": "",
+              "$$label": "文本标签",
+              "$$removeable": true,
+              "$$combineAble": false,
+              "$$maxChildrens": 0,
+              "$$childrenEditable": false,
+              "$$dragable": true,
+              "$$border": 0,
+              "$$attr": {
+                "variableKey": "",
+                "varClassCode": "",
+                "transformObjectCode": "",
+                "fieldCode": "",
+                "type": ""
+              },
+              "$$disabled": false,
+              "$$placeholder": "请输入",
+              "$$class": "",
+              "$$events": {},
+              "$$variableName": "flyLayout48",
+              "$$routerConfig": {
+                "pageInfo": {},
+                "params": []
+              },
+              "$$dropable": true,
+              "$$readonly": false,
+              "$$alias": "",
+              "$$connections": {
+                "beRelatives": [],
+                "relatives": {}
+              },
+              "$$transform": {
+                "to": [],
+                "from": ""
+              },
+              "$$exAttrs": [{
+                "key": "*ngIf",
+                "label": "是否显示",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngIf=\"boolean\""
+              }, {
+                "key": "*ngFor",
+                "label": "*ngFor",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngFor=\"let rowData of arrdata\""
+              }],
+              "$$isVisual": false,
+              "$$validation": {
+                "required": false
+              },
+              "$$style": {
+                "0": {
+                  "useShadow": false,
+                  "shadowInsert": "",
+                  "height": "70px",
+                  "borderBottomWidth": 1,
+                  "borderBottomColor": "#b6b2b2",
+                  "borderBottomStyle": "solid"
+                },
+                "1": {}
+              },
+              "$$checkStatus": {
+                "borderLastClick": "borderBottom"
+              },
+              "$$visible": true,
+              "$$mobileStyle": {},
+              "columnConfig": {},
+              "toggleable": false,
+              "collapsed": false
+            },
+            "children": [{
+              "componentName": "BlankContainer",
+              "general": {
+                "$$id": "blankContainer6",
+                "$$type": "BlankContainer",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "文本标签",
+                "$$removeable": false,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": true,
+                "$$dragable": false,
+                "$$border": 0,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {},
+                "$$variableName": "blankContainer6",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "useShadow": false,
+                    "shadowInsert": "",
+                    "height": "40px",
+                    "width": "200%"
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {}
+              },
+              "children": [{
+                "componentName": "Text",
+                "general": {
+                  "$$id": "text15",
+                  "$$type": "Text",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "",
+                  "$$removeable": true,
+                  "$$combineAble": true,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 10,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {
+                    "click": []
+                  },
+                  "$$variableName": "text15",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "fontWeight": "bold"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "type": "span",
+                  "content": "如何进行技术团队的建设和员工培养？",
+                  "aType": "link",
+                  "textAlign": "",
+                  "isDot": false,
+                  "dotHeight": true,
+                  "$$default": "示例文本",
+                  "$$$tooltipPosition": "top",
+                  "labelPosition": "",
+                  "showError": true,
+                  "showSuccess": true,
+                  "$$canTransformTo": [{
+                    "label": "文本输入框",
+                    "value": "InputText"
+                  }, {
+                    "label": "多行输入框",
+                    "value": "TextArea"
+                  }, {
+                    "label": "富文本",
+                    "value": "Editor"
+                  }],
+                  "requiredRed": false,
+                  "NotTransference": false
+                },
+                "children": []
+              }]
+            }, {
+              "componentName": "BlankContainer",
+              "general": {
+                "$$id": "blankContainer7",
+                "$$type": "BlankContainer",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "文本标签",
+                "$$removeable": false,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": true,
+                "$$dragable": false,
+                "$$border": 0,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {},
+                "$$variableName": "blankContainer7",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "useShadow": false,
+                    "shadowInsert": "",
+                    "direction": "column",
+                    "width": "50%",
+                    "marginLeft": "300px"
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {}
+              },
+              "children": [{
+                "componentName": "FlyLayout3",
+                "general": {
+                  "$$id": "flyLayout31",
+                  "$$type": "FlyLayout3",
+                  "$$isContainer": false,
+                  "$$group": "",
+                  "$$label": "文本标签",
+                  "$$removeable": true,
+                  "$$combineAble": false,
+                  "$$maxChildrens": 0,
+                  "$$childrenEditable": false,
+                  "$$dragable": true,
+                  "$$border": 0,
+                  "$$attr": {
+                    "variableKey": "",
+                    "varClassCode": "",
+                    "transformObjectCode": "",
+                    "fieldCode": "",
+                    "type": ""
+                  },
+                  "$$disabled": false,
+                  "$$placeholder": "请输入",
+                  "$$class": "",
+                  "$$events": {},
+                  "$$variableName": "flyLayout31",
+                  "$$routerConfig": {
+                    "pageInfo": {},
+                    "params": []
+                  },
+                  "$$dropable": true,
+                  "$$readonly": false,
+                  "$$alias": "",
+                  "$$connections": {
+                    "beRelatives": [],
+                    "relatives": {}
+                  },
+                  "$$transform": {
+                    "to": [],
+                    "from": ""
+                  },
+                  "$$exAttrs": [{
+                    "key": "*ngIf",
+                    "label": "是否显示",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngIf=\"boolean\""
+                  }, {
+                    "key": "*ngFor",
+                    "label": "*ngFor",
+                    "expression": "",
+                    "canPlaceAtLabel": true,
+                    "tooltip": "*ngFor=\"let rowData of arrdata\""
+                  }],
+                  "$$isVisual": false,
+                  "$$validation": {
+                    "required": false
+                  },
+                  "$$style": {
+                    "0": {
+                      "useShadow": false,
+                      "shadowInsert": "",
+                      "marginTop": "-20px"
+                    },
+                    "1": {}
+                  },
+                  "$$checkStatus": {},
+                  "$$visible": true,
+                  "$$mobileStyle": {},
+                  "columnConfig": {},
+                  "toggleable": false,
+                  "collapsed": false
+                },
+                "children": [{
+                  "componentName": "BlankContainer",
+                  "general": {
+                    "$$id": "blankContainer5",
+                    "$$type": "BlankContainer",
+                    "$$isContainer": false,
+                    "$$group": "",
+                    "$$label": "文本标签",
+                    "$$removeable": false,
+                    "$$combineAble": false,
+                    "$$maxChildrens": 0,
+                    "$$childrenEditable": true,
+                    "$$dragable": false,
+                    "$$border": 0,
+                    "$$attr": {
+                      "variableKey": "",
+                      "varClassCode": "",
+                      "transformObjectCode": "",
+                      "fieldCode": "",
+                      "type": ""
+                    },
+                    "$$disabled": false,
+                    "$$placeholder": "请输入",
+                    "$$class": "",
+                    "$$events": {},
+                    "$$variableName": "blankContainer5",
+                    "$$routerConfig": {
+                      "pageInfo": {},
+                      "params": []
+                    },
+                    "$$dropable": true,
+                    "$$readonly": false,
+                    "$$alias": "",
+                    "$$connections": {
+                      "beRelatives": [],
+                      "relatives": {}
+                    },
+                    "$$transform": {
+                      "to": [],
+                      "from": ""
+                    },
+                    "$$exAttrs": [{
+                      "key": "*ngIf",
+                      "label": "是否显示",
+                      "expression": "",
+                      "canPlaceAtLabel": true,
+                      "tooltip": "*ngIf=\"boolean\""
+                    }, {
+                      "key": "*ngFor",
+                      "label": "*ngFor",
+                      "expression": "",
+                      "canPlaceAtLabel": true,
+                      "tooltip": "*ngFor=\"let rowData of arrdata\""
+                    }],
+                    "$$isVisual": false,
+                    "$$validation": {
+                      "required": false
+                    },
+                    "$$style": {
+                      "0": {
+                        "useShadow": false,
+                        "shadowInsert": "",
+                        "height": "30px"
+                      },
+                      "1": {}
+                    },
+                    "$$checkStatus": {},
+                    "$$visible": true,
+                    "$$mobileStyle": {},
+                    "columnConfig": {}
+                  },
+                  "children": [{
+                    "componentName": "Button",
+                    "general": {
+                      "$$id": "button1",
+                      "$$type": "Button",
+                      "$$isContainer": false,
+                      "$$group": "",
+                      "$$label": "立即预约",
+                      "$$removeable": true,
+                      "$$combineAble": false,
+                      "$$maxChildrens": 0,
+                      "$$childrenEditable": false,
+                      "$$dragable": true,
+                      "$$border": 0,
+                      "$$attr": {
+                        "variableKey": "",
+                        "varClassCode": "",
+                        "transformObjectCode": "",
+                        "fieldCode": "",
+                        "type": ""
+                      },
+                      "$$disabled": false,
+                      "$$placeholder": "请输入",
+                      "$$class": "",
+                      "$$events": {
+                        "click": []
+                      },
+                      "$$variableName": "button1",
+                      "$$routerConfig": {
+                        "pageInfo": {},
+                        "params": [{
+                          "$$$searchCondition": "eq",
+                          "$$$searchRequired": 0,
+                          "$$$searchNull": 0
+                        }]
+                      },
+                      "$$dropable": true,
+                      "$$readonly": false,
+                      "$$alias": "",
+                      "$$connections": {
+                        "beRelatives": [],
+                        "relatives": {}
+                      },
+                      "$$transform": {
+                        "to": [],
+                        "from": ""
+                      },
+                      "$$exAttrs": [{
+                        "key": "*ngIf",
+                        "label": "是否显示",
+                        "expression": "",
+                        "canPlaceAtLabel": true,
+                        "tooltip": "*ngIf=\"boolean\""
+                      }, {
+                        "key": "*ngFor",
+                        "label": "*ngFor",
+                        "expression": "",
+                        "canPlaceAtLabel": true,
+                        "tooltip": "*ngFor=\"let rowData of arrdata\""
+                      }, {
+                        "key": "[disabled]",
+                        "label": "不可编辑",
+                        "expression": "",
+                        "canPlaceAtLabel": false,
+                        "tooltip": "[disabled]=\"boolean\""
+                      }, {
+                        "key": "[loading]",
+                        "label": "加载状态",
+                        "expression": "",
+                        "canPlaceAtLabel": false,
+                        "tooltip": "[loading]=\"boolean\""
+                      }, {
+                        "key": "[color]",
+                        "label": "颜色",
+                        "expression": "",
+                        "canPlaceAtLabel": true,
+                        "tooltip": ""
+                      }, {
+                        "key": "[icon]",
+                        "label": "图标",
+                        "expression": "",
+                        "canPlaceAtLabel": true,
+                        "tooltip": ""
+                      }, {
+                        "key": "[iconPosition]",
+                        "label": "图标位置",
+                        "expression": "",
+                        "canPlaceAtLabel": true,
+                        "tooltip": ""
+                      }],
+                      "$$isVisual": false,
+                      "$$validation": {
+                        "required": false
+                      },
+                      "$$style": {
+                        "0": {
+                          "useShadow": false,
+                          "shadowInsert": "",
+                          "paddingBottom": "10px",
+                          "borderRadius": 20,
+                          "backgroundColor": "#005eff",
+                          "marginLeft": "85px",
+                          "paddingLeft": "40px",
+                          "paddingRight": "40px"
+                        },
+                        "1": {}
+                      },
+                      "$$checkStatus": {},
+                      "$$visible": true,
+                      "$$mobileStyle": {},
+                      "columnConfig": {},
+                      "color": "",
+                      "icon": "",
+                      "iconPosition": "left",
+                      "$$$tooltipPosition": "top",
+                      "round": false
+                    },
+                    "children": []
+                  }]
+                }, {
+                  "componentName": "BlankContainer",
+                  "general": {
+                    "$$id": "blankContainer8",
+                    "$$type": "BlankContainer",
+                    "$$isContainer": false,
+                    "$$group": "",
+                    "$$label": "文本标签",
+                    "$$removeable": false,
+                    "$$combineAble": false,
+                    "$$maxChildrens": 0,
+                    "$$childrenEditable": true,
+                    "$$dragable": false,
+                    "$$border": 0,
+                    "$$attr": {
+                      "variableKey": "",
+                      "varClassCode": "",
+                      "transformObjectCode": "",
+                      "fieldCode": "",
+                      "type": ""
+                    },
+                    "$$disabled": false,
+                    "$$placeholder": "请输入",
+                    "$$class": "",
+                    "$$events": {},
+                    "$$variableName": "blankContainer8",
+                    "$$routerConfig": {
+                      "pageInfo": {},
+                      "params": []
+                    },
+                    "$$dropable": true,
+                    "$$readonly": false,
+                    "$$alias": "",
+                    "$$connections": {
+                      "beRelatives": [],
+                      "relatives": {}
+                    },
+                    "$$transform": {
+                      "to": [],
+                      "from": ""
+                    },
+                    "$$exAttrs": [{
+                      "key": "*ngIf",
+                      "label": "是否显示",
+                      "expression": "",
+                      "canPlaceAtLabel": true,
+                      "tooltip": "*ngIf=\"boolean\""
+                    }, {
+                      "key": "*ngFor",
+                      "label": "*ngFor",
+                      "expression": "",
+                      "canPlaceAtLabel": true,
+                      "tooltip": "*ngFor=\"let rowData of arrdata\""
+                    }],
+                    "$$isVisual": false,
+                    "$$validation": {
+                      "required": false
+                    },
+                    "$$style": {
+                      "0": {
+                        "useShadow": false,
+                        "shadowInsert": "",
+                        "marginTop": "",
+                        "marginBottom": "",
+                        "direction": "row"
+                      },
+                      "1": {}
+                    },
+                    "$$checkStatus": {},
+                    "$$visible": true,
+                    "$$mobileStyle": {},
+                    "columnConfig": {}
+                  },
+                  "children": [{
+                    "componentName": "FlyFlexRow",
+                    "general": {
+                      "$$id": "flyFlexRow5",
+                      "$$type": "FlyFlexRow",
+                      "$$isContainer": false,
+                      "$$group": "",
+                      "$$label": "文本标签",
+                      "$$removeable": true,
+                      "$$combineAble": false,
+                      "$$maxChildrens": 0,
+                      "$$childrenEditable": true,
+                      "$$dragable": true,
+                      "$$border": 0,
+                      "$$attr": {
+                        "variableKey": "",
+                        "varClassCode": "",
+                        "transformObjectCode": "",
+                        "fieldCode": "",
+                        "type": ""
+                      },
+                      "$$disabled": false,
+                      "$$placeholder": "请输入",
+                      "$$class": "",
+                      "$$events": {
+                        "click": [],
+                        "mousemove": [],
+                        "mouseleave": [],
+                        "mouseenter": [],
+                        "mousedown": [],
+                        "mouseup": [],
+                        "mouseover": [],
+                        "mouseout": []
+                      },
+                      "$$variableName": "flyFlexRow5",
+                      "$$routerConfig": {
+                        "pageInfo": {},
+                        "params": []
+                      },
+                      "$$dropable": true,
+                      "$$readonly": false,
+                      "$$alias": "",
+                      "$$connections": {
+                        "beRelatives": [],
+                        "relatives": {}
+                      },
+                      "$$transform": {
+                        "to": [],
+                        "from": ""
+                      },
+                      "$$exAttrs": [{
+                        "key": "*ngIf",
+                        "label": "是否显示",
+                        "expression": "",
+                        "canPlaceAtLabel": true,
+                        "tooltip": "*ngIf=\"boolean\""
+                      }, {
+                        "key": "*ngFor",
+                        "label": "*ngFor",
+                        "expression": "",
+                        "canPlaceAtLabel": true,
+                        "tooltip": "*ngFor=\"let rowData of arrdata\""
+                      }],
+                      "$$isVisual": false,
+                      "$$validation": {
+                        "required": false
+                      },
+                      "$$style": {
+                        "0": {
+                          "width": "100%",
+                          "height": "40px",
+                          "direction": "row",
+                          "display": "flex",
+                          "flexGrow": "1",
+                          "flexShrink": "1",
+                          "flexBasis": "100%"
+                        },
+                        "1": {}
+                      },
+                      "$$checkStatus": {},
+                      "$$visible": true,
+                      "$$mobileStyle": {},
+                      "columnConfig": {},
+                      "hasFixedHeight": false
+                    },
+                    "children": [{
+                      "componentName": "Text",
+                      "general": {
+                        "$$id": "text12",
+                        "$$type": "Text",
+                        "$$isContainer": false,
+                        "$$group": "",
+                        "$$label": "",
+                        "$$removeable": true,
+                        "$$combineAble": true,
+                        "$$maxChildrens": 0,
+                        "$$childrenEditable": false,
+                        "$$dragable": true,
+                        "$$border": 10,
+                        "$$attr": {
+                          "variableKey": "",
+                          "varClassCode": "",
+                          "transformObjectCode": "",
+                          "fieldCode": "",
+                          "type": ""
+                        },
+                        "$$disabled": false,
+                        "$$placeholder": "请输入",
+                        "$$class": "",
+                        "$$events": {
+                          "click": []
+                        },
+                        "$$variableName": "text12",
+                        "$$routerConfig": {
+                          "pageInfo": {},
+                          "params": []
+                        },
+                        "$$dropable": true,
+                        "$$readonly": false,
+                        "$$alias": "",
+                        "$$connections": {
+                          "beRelatives": [],
+                          "relatives": {}
+                        },
+                        "$$transform": {
+                          "to": [],
+                          "from": ""
+                        },
+                        "$$exAttrs": [{
+                          "key": "*ngIf",
+                          "label": "是否显示",
+                          "expression": "",
+                          "canPlaceAtLabel": true,
+                          "tooltip": "*ngIf=\"boolean\""
+                        }, {
+                          "key": "*ngFor",
+                          "label": "*ngFor",
+                          "expression": "",
+                          "canPlaceAtLabel": true,
+                          "tooltip": "*ngFor=\"let rowData of arrdata\""
+                        }],
+                        "$$isVisual": false,
+                        "$$validation": {
+                          "required": false
+                        },
+                        "$$style": {
+                          "0": {
+                            "useShadow": false,
+                            "shadowInsert": "",
+                            "marginLeft": "85px",
+                            "marginTop": "-60px"
+                          },
+                          "1": {}
+                        },
+                        "$$checkStatus": {},
+                        "$$visible": true,
+                        "$$mobileStyle": {},
+                        "columnConfig": {},
+                        "type": "span",
+                        "content": "咨询时间约",
+                        "aType": "link",
+                        "textAlign": "",
+                        "isDot": false,
+                        "dotHeight": true,
+                        "$$default": "示例文本",
+                        "$$$tooltipPosition": "top",
+                        "labelPosition": "",
+                        "showError": true,
+                        "showSuccess": true,
+                        "$$canTransformTo": [{
+                          "label": "文本输入框",
+                          "value": "InputText"
+                        }, {
+                          "label": "多行输入框",
+                          "value": "TextArea"
+                        }, {
+                          "label": "富文本",
+                          "value": "Editor"
+                        }],
+                        "requiredRed": false,
+                        "NotTransference": false
+                      },
+                      "children": []
+                    }, {
+                      "componentName": "Text",
+                      "general": {
+                        "$$id": "text13",
+                        "$$type": "Text",
+                        "$$isContainer": false,
+                        "$$group": "",
+                        "$$label": "",
+                        "$$removeable": true,
+                        "$$combineAble": true,
+                        "$$maxChildrens": 0,
+                        "$$childrenEditable": false,
+                        "$$dragable": true,
+                        "$$border": 10,
+                        "$$attr": {
+                          "variableKey": "",
+                          "varClassCode": "",
+                          "transformObjectCode": "",
+                          "fieldCode": "",
+                          "type": ""
+                        },
+                        "$$disabled": false,
+                        "$$placeholder": "请输入",
+                        "$$class": "",
+                        "$$events": {
+                          "click": []
+                        },
+                        "$$variableName": "text13",
+                        "$$routerConfig": {
+                          "pageInfo": {},
+                          "params": []
+                        },
+                        "$$dropable": true,
+                        "$$readonly": false,
+                        "$$alias": "",
+                        "$$connections": {
+                          "beRelatives": [],
+                          "relatives": {}
+                        },
+                        "$$transform": {
+                          "to": [],
+                          "from": ""
+                        },
+                        "$$exAttrs": [{
+                          "key": "*ngIf",
+                          "label": "是否显示",
+                          "expression": "",
+                          "canPlaceAtLabel": true,
+                          "tooltip": "*ngIf=\"boolean\""
+                        }, {
+                          "key": "*ngFor",
+                          "label": "*ngFor",
+                          "expression": "",
+                          "canPlaceAtLabel": true,
+                          "tooltip": "*ngFor=\"let rowData of arrdata\""
+                        }],
+                        "$$isVisual": false,
+                        "$$validation": {
+                          "required": false
+                        },
+                        "$$style": {
+                          "0": {
+                            "useShadow": false,
+                            "shadowInsert": "",
+                            "marginLeft": "-10px",
+                            "marginTop": "-60px",
+                            "color": "#ff5c00"
+                          },
+                          "1": {}
+                        },
+                        "$$checkStatus": {},
+                        "$$visible": true,
+                        "$$mobileStyle": {},
+                        "columnConfig": {},
+                        "type": "span",
+                        "content": "1.5",
+                        "aType": "link",
+                        "textAlign": "",
+                        "isDot": false,
+                        "dotHeight": true,
+                        "$$default": "示例文本",
+                        "$$$tooltipPosition": "top",
+                        "labelPosition": "",
+                        "showError": true,
+                        "showSuccess": true,
+                        "$$canTransformTo": [{
+                          "label": "文本输入框",
+                          "value": "InputText"
+                        }, {
+                          "label": "多行输入框",
+                          "value": "TextArea"
+                        }, {
+                          "label": "富文本",
+                          "value": "Editor"
+                        }],
+                        "requiredRed": false,
+                        "NotTransference": false
+                      },
+                      "children": []
+                    }, {
+                      "componentName": "Text",
+                      "general": {
+                        "$$id": "text14",
+                        "$$type": "Text",
+                        "$$isContainer": false,
+                        "$$group": "",
+                        "$$label": "",
+                        "$$removeable": true,
+                        "$$combineAble": true,
+                        "$$maxChildrens": 0,
+                        "$$childrenEditable": false,
+                        "$$dragable": true,
+                        "$$border": 10,
+                        "$$attr": {
+                          "variableKey": "",
+                          "varClassCode": "",
+                          "transformObjectCode": "",
+                          "fieldCode": "",
+                          "type": ""
+                        },
+                        "$$disabled": false,
+                        "$$placeholder": "请输入",
+                        "$$class": "",
+                        "$$events": {
+                          "click": []
+                        },
+                        "$$variableName": "text14",
+                        "$$routerConfig": {
+                          "pageInfo": {},
+                          "params": []
+                        },
+                        "$$dropable": true,
+                        "$$readonly": false,
+                        "$$alias": "",
+                        "$$connections": {
+                          "beRelatives": [],
+                          "relatives": {}
+                        },
+                        "$$transform": {
+                          "to": [],
+                          "from": ""
+                        },
+                        "$$exAttrs": [{
+                          "key": "*ngIf",
+                          "label": "是否显示",
+                          "expression": "",
+                          "canPlaceAtLabel": true,
+                          "tooltip": "*ngIf=\"boolean\""
+                        }, {
+                          "key": "*ngFor",
+                          "label": "*ngFor",
+                          "expression": "",
+                          "canPlaceAtLabel": true,
+                          "tooltip": "*ngFor=\"let rowData of arrdata\""
+                        }],
+                        "$$isVisual": false,
+                        "$$validation": {
+                          "required": false
+                        },
+                        "$$style": {
+                          "0": {
+                            "useShadow": false,
+                            "shadowInsert": "",
+                            "marginRight": "",
+                            "marginTop": "-60px",
+                            "marginLeft": "-10px"
+                          },
+                          "1": {}
+                        },
+                        "$$checkStatus": {},
+                        "$$visible": true,
+                        "$$mobileStyle": {},
+                        "columnConfig": {},
+                        "type": "span",
+                        "content": "小时",
+                        "aType": "link",
+                        "textAlign": "",
+                        "isDot": false,
+                        "dotHeight": true,
+                        "$$default": "示例文本",
+                        "$$$tooltipPosition": "top",
+                        "labelPosition": "",
+                        "showError": true,
+                        "showSuccess": true,
+                        "$$canTransformTo": [{
+                          "label": "文本输入框",
+                          "value": "InputText"
+                        }, {
+                          "label": "多行输入框",
+                          "value": "TextArea"
+                        }, {
+                          "label": "富文本",
+                          "value": "Editor"
+                        }],
+                        "requiredRed": false,
+                        "NotTransference": false
+                      },
+                      "children": []
+                    }]
+                  }]
+                }]
+              }]
+            }]
+          }]
+        }, {
+          "componentName": "FlyFlexRow",
+          "general": {
+            "$$id": "flyFlexRow9",
+            "$$type": "FlyFlexRow",
+            "$$isContainer": false,
+            "$$group": "",
+            "$$label": "文本标签",
+            "$$removeable": true,
+            "$$combineAble": false,
+            "$$maxChildrens": 0,
+            "$$childrenEditable": true,
+            "$$dragable": true,
+            "$$border": 0,
+            "$$attr": {
+              "variableKey": "",
+              "varClassCode": "",
+              "transformObjectCode": "",
+              "fieldCode": "",
+              "type": ""
+            },
+            "$$disabled": false,
+            "$$placeholder": "请输入",
+            "$$class": "",
+            "$$events": {
+              "click": [],
+              "mousemove": [],
+              "mouseleave": [],
+              "mouseenter": [],
+              "mousedown": [],
+              "mouseup": [],
+              "mouseover": [],
+              "mouseout": []
+            },
+            "$$variableName": "flyFlexRow9",
+            "$$routerConfig": {
+              "pageInfo": {},
+              "params": []
+            },
+            "$$dropable": true,
+            "$$readonly": false,
+            "$$alias": "",
+            "$$connections": {
+              "beRelatives": [],
+              "relatives": {}
+            },
+            "$$transform": {
+              "to": [],
+              "from": ""
+            },
+            "$$exAttrs": [{
+              "key": "*ngIf",
+              "label": "是否显示",
+              "expression": "",
+              "canPlaceAtLabel": true,
+              "tooltip": "*ngIf=\"boolean\""
+            }, {
+              "key": "*ngFor",
+              "label": "*ngFor",
+              "expression": "",
+              "canPlaceAtLabel": true,
+              "tooltip": "*ngFor=\"let rowData of arrdata\""
+            }],
+            "$$isVisual": false,
+            "$$validation": {
+              "required": false
+            },
+            "$$style": {
+              "0": {
+                "width": "100%",
+                "height": "400px",
+                "direction": "column",
+                "display": "flex",
+                "flexGrow": "1",
+                "flexShrink": "1",
+                "flexBasis": "100%",
+                "useShadow": false,
+                "shadowInsert": "",
+                "marginTop": "-30px"
+              },
+              "1": {}
+            },
+            "$$checkStatus": {},
+            "$$visible": true,
+            "$$mobileStyle": {},
+            "columnConfig": {},
+            "hasFixedHeight": false
+          },
+          "children": [{
+            "componentName": "Text",
+            "general": {
+              "$$id": "text16",
+              "$$type": "Text",
+              "$$isContainer": false,
+              "$$group": "",
+              "$$label": "",
+              "$$removeable": true,
+              "$$combineAble": true,
+              "$$maxChildrens": 0,
+              "$$childrenEditable": false,
+              "$$dragable": true,
+              "$$border": 10,
+              "$$attr": {
+                "variableKey": "",
+                "varClassCode": "",
+                "transformObjectCode": "",
+                "fieldCode": "",
+                "type": ""
+              },
+              "$$disabled": false,
+              "$$placeholder": "请输入",
+              "$$class": "",
+              "$$events": {
+                "click": []
+              },
+              "$$variableName": "text16",
+              "$$routerConfig": {
+                "pageInfo": {},
+                "params": []
+              },
+              "$$dropable": true,
+              "$$readonly": false,
+              "$$alias": "",
+              "$$connections": {
+                "beRelatives": [],
+                "relatives": {}
+              },
+              "$$transform": {
+                "to": [],
+                "from": ""
+              },
+              "$$exAttrs": [{
+                "key": "*ngIf",
+                "label": "是否显示",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngIf=\"boolean\""
+              }, {
+                "key": "*ngFor",
+                "label": "*ngFor",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngFor=\"let rowData of arrdata\""
+              }],
+              "$$isVisual": false,
+              "$$validation": {
+                "required": false
+              },
+              "$$style": {
+                "0": {
+                  "useShadow": false,
+                  "shadowInsert": "",
+                  "width": "100%",
+                  "height": "30px",
+                  "marginLeft": "6px",
+                  "fontWeight": "bold"
+                },
+                "1": {}
+              },
+              "$$checkStatus": {},
+              "$$visible": true,
+              "$$mobileStyle": {},
+              "columnConfig": {},
+              "type": "span",
+              "content": " 话题要点/大纲",
+              "aType": "link",
+              "textAlign": "",
+              "isDot": false,
+              "dotHeight": true,
+              "$$default": "示例文本",
+              "$$$tooltipPosition": "top",
+              "labelPosition": "",
+              "showError": true,
+              "showSuccess": true,
+              "$$canTransformTo": [{
+                "label": "文本输入框",
+                "value": "InputText"
+              }, {
+                "label": "多行输入框",
+                "value": "TextArea"
+              }, {
+                "label": "富文本",
+                "value": "Editor"
+              }],
+              "requiredRed": false,
+              "NotTransference": false
+            },
+            "children": []
+          }, {
+            "componentName": "Text",
+            "general": {
+              "$$id": "text17",
+              "$$type": "Text",
+              "$$isContainer": false,
+              "$$group": "",
+              "$$label": "",
+              "$$removeable": true,
+              "$$combineAble": true,
+              "$$maxChildrens": 0,
+              "$$childrenEditable": false,
+              "$$dragable": true,
+              "$$border": 10,
+              "$$attr": {
+                "variableKey": "",
+                "varClassCode": "",
+                "transformObjectCode": "",
+                "fieldCode": "",
+                "type": ""
+              },
+              "$$disabled": false,
+              "$$placeholder": "请输入",
+              "$$class": "",
+              "$$events": {
+                "click": []
+              },
+              "$$variableName": "text17",
+              "$$routerConfig": {
+                "pageInfo": {},
+                "params": []
+              },
+              "$$dropable": true,
+              "$$readonly": false,
+              "$$alias": "",
+              "$$connections": {
+                "beRelatives": [],
+                "relatives": {}
+              },
+              "$$transform": {
+                "to": [],
+                "from": ""
+              },
+              "$$exAttrs": [{
+                "key": "*ngIf",
+                "label": "是否显示",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngIf=\"boolean\""
+              }, {
+                "key": "*ngFor",
+                "label": "*ngFor",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngFor=\"let rowData of arrdata\""
+              }],
+              "$$isVisual": false,
+              "$$validation": {
+                "required": false
+              },
+              "$$style": {
+                "0": {
+                  "useShadow": false,
+                  "shadowInsert": "",
+                  "marginLeft": "10px"
+                },
+                "1": {}
+              },
+              "$$checkStatus": {},
+              "$$visible": true,
+              "$$mobileStyle": {},
+              "columnConfig": {},
+              "type": "span",
+              "content": "互联网的到来确实降低了信息沟通的成本，也在某种程度上完成 了资本和资源的全球战略以及重新分配。\n但是互联网的诞生不只是对于传统行业”掠夺性“的颠覆，它对于互联网原生世界也有着不可估量的作用。\n一方面，互联网降低了时间和空间的沟通成本；但另一方面，互联网的出现却给资讯、社交、购物等这些”生活软件“\n提供了有形的介质；类似于手机、电脑等各种处理终端的出现让互联网”物化“成为了人类不可或缺的生活需求。\n但也正是因为互联网原生世界社交、购物等对于现实世界的颠覆，才让支付宝、微信、微博、抖音等这种生态孤岛成\n为了现实。\n一旦它们搞不清楚自己的”界限“，企图越界，不是每一个都能像支付宝一样连接生活缴费，像微信一样成为大杂烩...",
+              "aType": "link",
+              "textAlign": "",
+              "isDot": false,
+              "dotHeight": true,
+              "$$default": "示例文本",
+              "$$$tooltipPosition": "top",
+              "labelPosition": "",
+              "showError": true,
+              "showSuccess": true,
+              "$$canTransformTo": [{
+                "label": "文本输入框",
+                "value": "InputText"
+              }, {
+                "label": "多行输入框",
+                "value": "TextArea"
+              }, {
+                "label": "富文本",
+                "value": "Editor"
+              }],
+              "requiredRed": false,
+              "NotTransference": false
+            },
+            "children": []
+          }, {
+            "componentName": "FlyAccordion",
+            "general": {
+              "$$id": "flyAccordion",
+              "$$type": "FlyAccordion",
+              "$$isContainer": false,
+              "$$group": "",
+              "$$label": "文本标签",
+              "$$removeable": true,
+              "$$combineAble": false,
+              "$$maxChildrens": 0,
+              "$$childrenEditable": true,
+              "$$dragable": true,
+              "$$border": 0,
+              "$$attr": {
+                "variableKey": "",
+                "varClassCode": "",
+                "transformObjectCode": "",
+                "fieldCode": "",
+                "type": ""
+              },
+              "$$disabled": false,
+              "$$placeholder": "请输入",
+              "$$class": "",
+              "$$events": {},
+              "$$variableName": "flyAccordion",
+              "$$routerConfig": {
+                "pageInfo": {},
+                "params": []
+              },
+              "$$dropable": true,
+              "$$readonly": false,
+              "$$alias": "",
+              "$$connections": {
+                "beRelatives": [],
+                "relatives": {}
+              },
+              "$$transform": {
+                "to": [],
+                "from": ""
+              },
+              "$$exAttrs": [{
+                "key": "*ngIf",
+                "label": "是否显示",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngIf=\"boolean\""
+              }, {
+                "key": "*ngFor",
+                "label": "*ngFor",
+                "expression": "",
+                "canPlaceAtLabel": true,
+                "tooltip": "*ngFor=\"let rowData of arrdata\""
+              }],
+              "$$isVisual": false,
+              "$$validation": {
+                "required": false
+              },
+              "$$style": {
+                "0": {
+                  "useShadow": false,
+                  "shadowInsert": ""
+                },
+                "1": {}
+              },
+              "$$checkStatus": {},
+              "$$visible": true,
+              "$$mobileStyle": {},
+              "columnConfig": {},
+              "multiple": true,
+              "$$$wordWidth": "ui-word-width-4"
+            },
+            "children": [{
+              "componentName": "FlyAccordionTab",
+              "general": {
+                "$$id": "flyAccordionTab",
+                "$$type": "FlyAccordionTab",
+                "$$isContainer": false,
+                "$$group": "",
+                "$$label": "更多详情",
+                "$$removeable": false,
+                "$$combineAble": false,
+                "$$maxChildrens": 0,
+                "$$childrenEditable": true,
+                "$$dragable": false,
+                "$$border": 0,
+                "$$attr": {
+                  "variableKey": "",
+                  "varClassCode": "",
+                  "transformObjectCode": "",
+                  "fieldCode": "",
+                  "type": ""
+                },
+                "$$disabled": false,
+                "$$placeholder": "请输入",
+                "$$class": "",
+                "$$events": {},
+                "$$variableName": "flyAccordionTab",
+                "$$routerConfig": {
+                  "pageInfo": {},
+                  "params": []
+                },
+                "$$dropable": true,
+                "$$readonly": false,
+                "$$alias": "",
+                "$$connections": {
+                  "beRelatives": [],
+                  "relatives": {}
+                },
+                "$$transform": {
+                  "to": [],
+                  "from": ""
+                },
+                "$$exAttrs": [{
+                  "key": "*ngIf",
+                  "label": "是否显示",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngIf=\"boolean\""
+                }, {
+                  "key": "*ngFor",
+                  "label": "*ngFor",
+                  "expression": "",
+                  "canPlaceAtLabel": true,
+                  "tooltip": "*ngFor=\"let rowData of arrdata\""
+                }],
+                "$$isVisual": false,
+                "$$validation": {
+                  "required": false
+                },
+                "$$style": {
+                  "0": {
+                    "useShadow": false,
+                    "shadowInsert": ""
+                  },
+                  "1": {}
+                },
+                "$$checkStatus": {},
+                "$$visible": true,
+                "$$mobileStyle": {},
+                "columnConfig": {},
+                "defaultOpen": true
+              },
+              "children": []
+            }]
+          }]
+        }]
+      }]
+    }]
+  }],
+  "visualAttr": {
+    "componentName": "VisualStage",
+    "general": {
+      "$$id": "visualStage",
+      "$$type": "VisualStage",
+      "$$isContainer": false,
+      "$$group": "",
+      "$$label": "文本标签",
+      "$$removeable": false,
+      "$$combineAble": false,
+      "$$maxChildrens": 0,
+      "$$childrenEditable": true,
+      "$$dragable": false,
+      "$$border": 0,
+      "$$attr": {
+        "variableKey": "",
+        "varClassCode": "",
+        "transformObjectCode": "",
+        "fieldCode": "",
+        "type": ""
+      },
+      "$$disabled": false,
+      "$$placeholder": "请输入",
+      "$$class": "",
+      "$$events": {},
+      "$$variableName": "visualStage",
+      "$$routerConfig": {
+        "pageInfo": {},
+        "params": []
+      },
+      "$$dropable": true,
+      "$$readonly": false,
+      "$$alias": "",
+      "$$connections": {
+        "beRelatives": [],
+        "relatives": {}
+      },
+      "$$transform": {
+        "to": [],
+        "from": ""
+      },
+      "$$exAttrs": [{
+        "key": "*ngIf",
+        "label": "是否显示",
+        "expression": "",
+        "canPlaceAtLabel": true,
+        "tooltip": "*ngIf=\"boolean\""
+      }, {
+        "key": "*ngFor",
+        "label": "*ngFor",
+        "expression": "",
+        "canPlaceAtLabel": true,
+        "tooltip": "*ngFor=\"let rowData of arrdata\""
+      }],
+      "$$isVisual": false,
+      "$$validation": {
+        "required": false
+      },
+      "$$style": {
+        "0": {},
+        "1": {}
+      },
+      "$$checkStatus": {},
+      "$$visible": true,
+      "$$mobileStyle": {},
+      "columnConfig": {},
+      "style": {}
+    },
+    "children": []
+  }
+}

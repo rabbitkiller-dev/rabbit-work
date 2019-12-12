@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script rel="script" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+<!--<div id="ra1" style="width: 100px;height: 100px;background: center / contain no-repeat url('https://interactive-examples.mdn.mozilla.net/media/examples/firefox-logo.svg'),#eee 35% url('https://interactive-examples.mdn.mozilla.net/media/examples/lizard.png');"></div>-->
+<script>
+    // console.log(ele.style.background);
+const a=     $('<div id="ra1" style="width: 120px;height: 31px;background: rgba(255, 255, 255, 0.2);margin: 16px 28px 16px 0;float: left;"></div>');
+    // const ele = document.querySelector('#ra1');
+    console.log(a.get(0).style.cssText);
+    // const a=     $('<div id="ra1" style="width: 100px;height: 100px;background-position: center;"></div>');
+    console.log(a);
+    console.log(a.css('background'));
+    console.log(a.css('background-position', 'center'));
+document.body.append(a.get(0));
+</script>
+</body>
+</html>

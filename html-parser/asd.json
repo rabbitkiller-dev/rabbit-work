@@ -1,0 +1,258 @@
+[
+  {
+    "type": "element",
+    "tagName": "fly-dialog",
+    "attributes": [
+      {
+        "key": "header",
+        "value": "预览"
+      },
+      {
+        "key": "(onAfterHide)",
+        "value": "close()"
+      },
+      {
+        "key": "size",
+        "value": "full"
+      }
+    ],
+    "children": [
+      {
+        "type": "text",
+        "content": "\n  "
+      },
+      {
+        "type": "comment",
+        "content": "上面的控制栏"
+      },
+      {
+        "type": "text",
+        "content": "\n  "
+      },
+      {
+        "type": "element",
+        "tagName": "div",
+        "attributes": [
+          {
+            "key": "class",
+            "value": "control-bar ui-shadow"
+          }
+        ],
+        "children": [
+          {
+            "type": "text",
+            "content": "\n    "
+          },
+          {
+            "type": "element",
+            "tagName": "div",
+            "attributes": [
+              {
+                "key": "class",
+                "value": "ui-label-content"
+              }
+            ],
+            "children": [
+              {
+                "type": "text",
+                "content": "\n      "
+              },
+              {
+                "type": "element",
+                "tagName": "label",
+                "attributes": [],
+                "children": [
+                  {
+                    "type": "text",
+                    "content": "设备类型"
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "content": "\n      "
+              },
+              {
+                "type": "element",
+                "tagName": "div",
+                "attributes": [
+                  {
+                    "key": "class",
+                    "value": "content"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "text",
+                    "content": "\n        "
+                  },
+                  {
+                    "type": "element",
+                    "tagName": "fly-dropdown",
+                    "attributes": [
+                      {
+                        "key": "[options]",
+                        "value": "devices"
+                      },
+                      {
+                        "key": "[(ngModel)]",
+                        "value": "selectedDevice"
+                      },
+                      {
+                        "key": "name",
+                        "value": "dropdown"
+                      },
+                      {
+                        "key": "appendTo",
+                        "value": "body"
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "text",
+                    "content": "\n      "
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "content": "\n    "
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "content": "\n  "
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "content": "\n  "
+      },
+      {
+        "type": "comment",
+        "content": "内容"
+      },
+      {
+        "type": "text",
+        "content": "\n  "
+      },
+      {
+        "type": "element",
+        "tagName": "div",
+        "attributes": [
+          {
+            "key": "class",
+            "value": "preview-content"
+          }
+        ],
+        "children": [
+          {
+            "type": "text",
+            "content": "\n    "
+          },
+          {
+            "type": "comment",
+            "content": "这个是为了流布局"
+          },
+          {
+            "type": "text",
+            "content": "\n    "
+          },
+          {
+            "type": "element",
+            "tagName": "div",
+            "attributes": [
+              {
+                "key": "class",
+                "value": "inner"
+              }
+            ],
+            "children": [
+              {
+                "type": "text",
+                "content": "\n      "
+              },
+              {
+                "type": "element",
+                "tagName": "div",
+                "attributes": [
+                  {
+                    "key": "[class]",
+                    "value": "'container ui-shadow ' + selectedDevice"
+                  }
+                ],
+                "children": [
+                  {
+                    "type": "text",
+                    "content": "\n        "
+                  },
+                  {
+                    "type": "comment",
+                    "content": "遮住，不让用户点击里面的内容"
+                  },
+                  {
+                    "type": "text",
+                    "content": "\n        "
+                  },
+                  {
+                    "type": "element",
+                    "tagName": "div",
+                    "attributes": [
+                      {
+                        "key": "form-control-editable",
+                        "value": null
+                      },
+                      {
+                        "key": "*ngIf",
+                        "value": "stage"
+                      },
+                      {
+                        "key": "[fc]",
+                        "value": "stage"
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "text",
+                    "content": "\n        "
+                  },
+                  {
+                    "type": "element",
+                    "tagName": "div",
+                    "attributes": [
+                      {
+                        "key": "class",
+                        "value": "mark"
+                      }
+                    ],
+                    "children": []
+                  },
+                  {
+                    "type": "text",
+                    "content": "\n      "
+                  }
+                ]
+              },
+              {
+                "type": "text",
+                "content": "\n    "
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "content": "\n  "
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "content": "\n"
+      }
+    ]
+  }
+]

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="jsencrypt.min.js"></script>
+<script>
+  const key ='MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCz/MqXvQdmTj7CTbje0+fTBoNPrX8+nJfz1wVVS8Uv/xEqwXLrwdBISwD5wb0qoQs/3U4CbLknNebFuw2ZNl7XDymx4D+d5qE62AXsPgmvjpUmZkQY9sKT6RxdNUSL6JIh5IkLsNeEAtYe+CEk+FoS+tzY44qS4vqXQOPLeraTmQIDAQAB';
+  const Encrypt = new JSEncrypt();
+  // Encrypt.setPublicKey(window.btoa(key));
+  Encrypt.setPublicKey(key);
+  console.log(Encrypt.encrypt('123456'));
+  console.log(Encrypt.encrypt('weizhihua'));
+  console.log(Encrypt.encrypt('2b_pencil'));
+</script>
+</body>
+</html>

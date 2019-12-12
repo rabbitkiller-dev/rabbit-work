@@ -1,0 +1,87 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>autoComplete</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <style type="text/css">
+        .autoComplete {margin:8px;position:relative;float:left;}
+        .autoComplete input {width:200px;height:25px;margin:0;padding:0;line-height:25px;}
+        .autoComplete ul {z-index:-12;padding:0px;margin:0px;border:1px #333 solid;width:200px;background:white;display:none;position:absolute;left:0;top:28px;*margin-left:9px;*margin-top:2px;margin-top:1px;}
+        .autoComplete li {list-style:none;}
+        .autoComplete li a {display:block;color:#000;text-decoration:none;padding:1px 0 1px 5px;_width:97%;}
+        .autoComplete li a:hover {color:#000;background:#ccc;border:none;}
+    </style>
+    <script type="text/javascript">
+      //<![CDATA[
+      var getElementsByClassName = function (searchClass, node, tag) {/* 兼容各浏览器的选择class的方法；(：//www.jb51.net，想了解更多请看这个地址) */
+        node = node || document, tag = tag ? tag.toUpperCase() : "*";
+        if(document.getElementsByClassName){/* 支持getElementsByClassName的浏览器 */
+          var temp = node.getElementsByClassName(searchClass);
+          if(tag=="*"){
+            return temp;
+          } else {
+            var ret = new Array();
+            for(var i=0; i<temp.length; i++)
+              if(temp[i].nodeName==tag)
+                ret.push(temp[i]);
+            return ret;
+          }
+        }else{/* 不支持getElementsByClassName的浏览器 */
+          var classes = searchClass.split(" "),
+            elements = (tag === "*" && node.all)? node.all : node.getElementsByTagName(tag),
+            patterns = [], returnElements = [], current, match;
+          var i = classes.length;
+          while(--i >= 0)
+            patterns.push(new RegExp("(^|s)" + classes[i] + "(s|$)"));
+          var j = elements.length;
+          while(--j >= 0){
+            current = elements[j], match = false;
+            for(var k=0, kl=patterns.length; k<kl; k++){
+              match = patterns[k].test(current.className);
+              if(!match) break;
+            }
+            if(match) returnElements.push(current);
+          }
+          return returnElements;
+        }
+      };
+      var addEvent=(function(){/* 用此函数添加事件防止事件覆盖 */
+        if(document.addEventListener){
+          return function(type, fn){ this.addEventListener(type, fn, false); };
+        }else if(document.attachEvent){
+          return function(type,fn){
+            this.attachEvent(on+type, function () {
+              return fn.call(this, window.event);/* 兼容IE */
+            });
+          };
+        }
+      })();
+      ;(function(window){
+        /* 插件开始 */
+        var autoComplete=function(o){
+          var handler=(function(){
+            var handler=function(e,o){ return new handler.prototype.init(e,o); };/* 为每个选择的dom都创建一个相对应的对象，这样选择多个dom时可以很方便地使用 */
+            handler.prototype={
+                e:null, o:null, timer:null, show:0, input:null, popup:null,
+                init:function(e,o){/* 设置初始对象 */
+                  this.e=e, this.o=o,
+                    this.input=this.e.getElementsByTagName(this.o.input)[0],
+                    this.popup=this.e.getElementsByTagName(this.o.popup)[0],
+                    this.initEvent();/* 初始化各种事件 */
+                },
+                match:function(quickExpr,value,source){/* 生成提示 */
+                  var li = null;
+                  for(var i in source){
+                    if( value.length>0 && quickExpr.exec(source[i])!=null ){
+                      li = document.createElement(li);
+                      li.innerHTML = <a href="javascript:;">+source[i]+</a>;
+                      this.popup.appendChild(li);
+                    }
+                  }
+                  if(this.popup.getElementsByTagName(a).length)
+                    this.popup.style.display=block;
+                  else
+                    this.popup.style.display=none;
+                },
+              &n

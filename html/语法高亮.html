@@ -1,0 +1,240 @@
+<!doctype html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>color keywords</title>
+    <style type="text/css">
+        * {
+            font-family: "新宋体";
+        }
+
+        #txtCode{
+            width : 100%;
+            height: 200px;
+            resize: vertical;
+        }
+
+        .Output{
+            border		: 1px solid #396;
+            color 		: white;
+            width		: 100%;
+            resize		: both;
+            font-size	: 16px;
+            line-height	: 150%;
+            background-color:#0B161D;
+        }
+
+        Span.Comments{
+            color:#159AE0
+        }
+
+        Span.String{
+            color:#27A735;
+        }
+
+        Span.RegExp{
+            color:#EA842B;
+        }
+
+        Span.Keywords{
+            color:#FFAA00;
+        }
+
+        Span.Number{
+            color:#9C3583;
+        }
+
+        Span.Operator{
+            color:#8CBBAD;
+        }
+    </style>
+
+    <script type="text/javascript">
+      function colorKeywords(){
+        var keywords = "Array|arguments|alert|window|document|location|Boolean|Date|Enumerator|Error|Function|Global|Math|Number|Object|RegExp|String|break|delete|function|return|typeof|case|do|if|switch|var|catch|else|in|this|void|continue|false|instanceof|throw|while|debugger|finally|new|true|with|default|for|null|try|abstract|double|goto|native|static|boolean|enum|implements|package|super|byte|export|import|private|synchronized|char|extends|int|protected|print|throws|class|final|interface|public|transient|const|float|long|short|volatile";
+
+        //解析优先级: 注释 > 字符串 > 正则 > 关键字 > 数字 > 运算符
+        var regStr	 = "(/\\*[\\S\\s]*?\\*/|//.*?\\r?\\n)"
+          + "|((?:\"(?:[^\"]*?\\\\\")*.*?\")|(?:'(?:[^']*?\\\\')*.*?'))"
+          + "|(/(?:[^/]+?\\\\/)*.*?/[a-zA-Z]*)"
+          + "|(\\b(?:"+keywords+")\\b)"
+          + "|(\\b\\d+\\b)"
+          + "|(\\+\\+|--|===|==|\\+=|-=|\\*=|%=|~=|\\^=|\\|=|\\+|\\-|\\*|%|=|\\?|\\:|\\{|\\}|\\(|\\)|\\[|\\]|&&|&|\\|\\||\\|)";
+
+        var reg		= new RegExp(regStr, "gi");
+        var source	= $("txtCode").value;
+        if( source == "" ) return;
+
+        var ds = new Date();
+        //着色前对特殊字符：<、>进行处理，否则格式会乱掉。
+        source = source.replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;");
+
+        //对关键字进行着色
+        var output = source.replace(reg, function(){
+          var args 	= [].slice.call(arguments, 0);
+          var lstIdx	= args[args.length - 2];
+          var match   = args[0];
+
+          if( args[1] ) return "<span class='Comments'>"	+ args[1] + "</span>";
+          if( args[2] ) return "<span class='String'>"	+ args[2] + "</span>";
+          if( args[3] ) return "<span class='RegExp'>"	+ args[3] + "</span>";
+
+          if( args[4] ) return  (source.charAt(lstIdx-1) != "$")
+            ? "<span class='Keywords'>"+ args[4] + "</span>"
+            : match;
+
+          if( args[5] ) return  (source.charAt(lstIdx-1) != "$")
+            ? "<span class='Number'>"	+ args[5] + "</span>"
+            : match;
+
+          if( args[6] ) return "<span class='Operator'>"	+ args[6] + "</span>";
+
+          return match;
+        });
+
+        //替换掉空格和回车使能够正常格式化输出
+        output = output.replace(/\r?\n/g, "<br/>"	)
+          .replace(/\t/g	, "    ")
+          .replace(/(<\/?\w+.*?>)|(\s)/g, function($0, $1, $2){
+            if( $1 ) return $1;
+            if( $2 ) return " ";
+          });
+
+        var de = new Date();
+
+        alert("耗时：" + (de - ds));
+
+        $("output").innerHTML = output;
+      }
+
+
+      function $(id){
+        return document.getElementById(id);
+      }
+
+
+      function clearOutput(){
+        $("output").innerHTML="";
+      }
+    </script>
+</head>
+<body>
+
+<input type="button" value="代码着色" onClick="colorKeywords()"	/>
+<input type="button" value="情况输出" onClick="clearOutput()"	/>
+<br/>
+<br/>
+
+请输入要着色的代码:
+<textarea id="txtCode">
+/**---------------------------
+* test multiline comments
+* @author jianbo.wang
+*/
+
+function(){
+   //测试单行注释着色
+
+   /**--------------------------
+   * 测试多行注释着色.
+   *--------------------------*/
+
+   //测试字符串着色.
+   print("\"hello world!\"");
+   print('will output:"hello world!"');
+
+   //测试正则着色
+   var reg = /(<\/?\w+.*?>)|(\s)/g;
+
+   //测试关键字着色
+   var output, _window, $window,
+	   c= window.alert, 	d= $window.alert,	e= _window.alert,
+	   f= window._alert, 	g= $window._alert, 	h= _widnow._alert
+	   i= window.$alert, 	j= $window.$alert,	k= _window.$alert;
+
+   for(var i=0; i<100; i++){
+	   output = "Welcome user" + i;
+       alert(output);
+   }
+
+   //测试数字着色
+   var a = 100, b= "200", $100, _200, c="$200", d="_100";
+
+
+   //运算符着色测试
+   var index = 0;
+   var user = {
+	   name : "张三",
+	   age  : 12,
+	   index: index++
+   };
+
+   var a = 0;
+   a++; a--; a+="hello"; a+=100; a-=1; a*=1; a%=1;
+   (a === 1	) ? true : false;
+   (a ==  1	) ? true : false;
+   (a =   1	) ? true : false;
+   (a >   1 ) ? true : false;
+}
+
+function colorKeywords(){
+	//解析优先级: 注释 > 字符串 > 正则 > 关键字 > 数字 > 运算符
+	var keywords = "Array|arguments|alert|window|document|location|Boolean|Date|Enumerator|Error|Function|Global|Math|Number|Object|RegExp|String|break|delete|function|return|typeof|case|do|if|switch|var|catch|else|in|this|void|continue|false|instanceof|throw|while|debugger|finally|new|true|with|default|for|null|try|abstract|double|goto|native|static|boolean|enum|implements|package|super|byte|export|import|private|synchronized|char|extends|int|protected|print|throws|class|final|interface|public|transient|const|float|long|short|volatile";
+	var regStr	 = "(/\\*\\*[\\S\\s]*?\\*/|//.*?\\r?\\n)"
+				 + "|((?:\"(?:[^\"]+?\\\\\")*.*?\")|(?:'(?:[^']+?\\\\')*.*?'))"
+				 + "|(/(?:[^/]+?\\\\/)*.*?/[a-zA-Z]*)"
+				 + "|(\\b(?:"+keywords+")\\b)"
+				 + "|(\\b\\d+\\b)"
+				 + "|(\\+\\+|--|===|==|\\+=|-=|\\*=|%=|~=|\\^=|\\|=|\\+|\\-|\\*|%|=|\\?|\\:|\\{|\\}|\\(|\\)|\\[|\\])";
+
+	var reg		= new RegExp(regStr, "gi");
+	var source	= $("txtCode").value;
+	if( source == "" ) return;
+
+	//着色前对特殊字符：<、>进行处理，否则格式会乱掉。
+	source = source.replace(/</g, "&lt;")
+				   .replace(/>/g, "&gt;");
+
+	//对关键字进行着色
+	var output = source.replace(reg, function(){
+					var args = [].slice.call(arguments, 0);
+					if( args[1] ) return "<span class='Comments'>"	+ args[1] + "</span>";
+					if( args[2] ) return "<span class='String'>"	+ args[2] + "</span>";
+					if( args[3] ) return "<span class='RegExp'>"	+ args[3] + "</span>";
+					if( args[4] ) return "<span class='Keywords'>"	+ args[4] + "</span>";
+					if( args[5] ) return "<span class='Number'>"	+ args[5] + "</span>";
+					if( args[6] ) return "<span class='Operator'>"	+ args[6] + "</span>";
+					return args[0];
+			   });
+
+	//替换掉空格和回车使能够正常格式化输出
+	output = output.replace(/\r?\n/g, "<br/>"	)
+				   .replace(/\t/g	, "    ")
+				   .replace(/(<\/?\w+.*?>)|(\s)/g, function($0, $1, $2){
+						if( $1 ) return $1;
+						if( $2 ) return " ";
+					});
+
+	$("output").innerHTML = output;
+}
+
+
+function $(id){
+	return document.getElementById(id);
+}
+
+
+function clearOutput(){
+	$("output").innerHTML="";
+}
+</textarea>
+<br/>
+<br/>
+代码着色结果:
+<div id="output" class="Output">
+    codes output here!
+</div>
+
+</body>
+</html>

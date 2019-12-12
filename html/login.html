@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 权重
+            标签选择器: 1
+            class选择器: 10
+            id选择器: 100
+     -->
+    <style>
+        /* #idSelector{
+             color: blue;
+         }
+         .classSelector{
+             color: #000000;
+         }
+         div{
+             color: red;
+         }
+         div{
+             color: #ffffff;
+         }
+ */
+
+        /*有道云*/
+/*        .text {
+            border: 1px solid red;
+        }
+        .text:focus{
+            border:1px solid  lawngreen;
+            outline:1px solid  lawngreen;
+        }*/
+/*        .inputAccount{
+            color: blueviolet;
+        }
+        .inputPassword{
+            color: blue;
+        }
+
+        !*同级选择器*!
+
+        .inputAccount.text {
+            border: 1px solid red;
+        }
+        .inputAccount.text:focus{
+            border:1px solid  lawngreen;
+            outline:1px solid  lawngreen;
+        }
+        .inputPassword.text {
+            border: 1px solid red;
+        }
+        .inputPassword.text:focus{
+            border:1px solid  lawngreen;
+            outline:1px solid  lawngreen;
+        }*/
+
+        /*父子选择器*/
+        .login .inputAccount.text {
+            border: 1px solid red;
+        }
+        .login .inputAccount.text:focus{
+            border: 1px solid red;
+        }
+        .login .inputPassword.text {
+            border: 1px solid red;
+        }
+        .login .inputPassword.text:focus{
+            border: 1px solid red;
+        }
+        .registry .inputAccount.text {
+            border: 1px solid lawngreen;
+        }
+        .registry .inputAccount.text:focus{
+            border: 1px solid lawngreen;
+        }
+        .registry .inputPassword.text {
+            border: 1px solid lawngreen;
+        }
+        .registry .inputPassword.text:focus{
+            border: 1px solid lawngreen;
+        }
+    </style>
+</head>
+<body>
+<div>标签选择器</div>
+<div id="idSelector">id选择器</div>
+<div class="inputAccount">类选择器</div>
+
+
+<!-- 有道云 -->
+<!--<input class="inputAccount text">
+<input class="inputPassword text">
+<input type="button" class="text">-->
+
+
+<!--登录-->
+<div class="login">
+    <input class="inputAccount text">
+    <input class="inputPassword text">
+</div>
+<!--注册-->
+<div class="registry">
+    <input class="inputAccount text">
+    <input class="inputPassword text">
+</div>
+</body>
+</html>

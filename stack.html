@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/@stackblitz/sdk/bundles/sdk.umd.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+    <script>
+      // Create the index.ts file
+      const code = `import moment from 'moment';
+
+document.getElementById('time').innerHTML = moment().format('MMMM Do YYYY, h:mm:ss a');
+`;
+
+      // Create the index.html file
+      const html = `<h1>I was created on <span id='time'></span></h1>`
+
+      // Create the project payload.
+      const project = {
+        files: {
+          'index.ts': code,
+          'index.html': html
+        },
+        title: 'Dynamically Generated Project',
+        description: 'Created with <3 by the StackBlitz SDK!',
+        template: 'typescript',
+        tags: ['stackblitz', 'sdk'] ,
+        dependencies: {
+          moment: '*' // * = latest version
+        }
+      };
+
+      const sdk = window.StackBlitzSDK;
+      // Method to open project in new window
+      window['openNewProject'] = () => {
+        sdk.openProject(project);
+      }
+
+      // Method to embed this project
+      window['embedNewProject'] = () => {
+        const vm = sdk.embedProject('myDiv', project, { height: 320 });
+        console.log(vm);
+        window.asdsd = vm;
+      }
+    </script>
+</head>
+<body>
+<h1>Create new project!</h1>
+
+<button onclick="openNewProject()">Open in new window</button>
+
+<button onclick="embedNewProject()">Embed</button>
+
+<br />
+
+<div id="myDiv"></div>
+</body>
+</html>

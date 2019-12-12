@@ -1,0 +1,336 @@
+{
+  "html": "\n<input>\n<fly-dialog header=\"预览\" (onAfterHide)=\"close()\" size=\"full\">\n  <!--上面的控制栏-->\n  <div class=\"control-bar ui-shadow\">\n    <div class=\"ui-label-content\">\n      <label>设备类型</label>\n      <div class=\"content\">\n        <fly-dropdown [options]=\"devices\" [(ngModel)]=\"selectedDevice\" name=\"dropdown\" appendTo=\"body\"></fly-dropdown>\n      </div>\n    </div>\n  </div>\n  <!--内容-->\n  <div class=\"preview-content\">\n    <!--这个是为了流布局-->\n    <div class=\"inner\">\n      <div [class]=\"'container ui-shadow ' + selectedDevice\">\n        <!--遮住，不让用户点击里面的内容-->\n        <div form-control-editable *ngIf=\"stage\" [fc]=\"stage\"></div>\n        <div class=\"mark\"></div>\n      </div>\n    </div>\n  </div>\n</fly-dialog>\n\n",
+  "tokens": [
+    {
+      "type": "text",
+      "context": "\n",
+      "start": 0,
+      "end": 0
+    },
+    {
+      "type": "single",
+      "context": "<input>",
+      "start": 1,
+      "end": 7
+    },
+    {
+      "type": "text",
+      "context": "\n",
+      "start": 8,
+      "end": 8
+    },
+    {
+      "type": "tag-start",
+      "context": "<fly-dialog header=\"预览\" (onAfterHide)=\"close()\" size=\"full\">",
+      "start": 9,
+      "end": 68
+    },
+    {
+      "type": "text",
+      "context": "\n  ",
+      "start": 69,
+      "end": 71
+    },
+    {
+      "type": "comment",
+      "context": "<!--上面的控制栏-->",
+      "start": 72,
+      "end": 84
+    },
+    {
+      "type": "text",
+      "context": "\n  ",
+      "start": 85,
+      "end": 87
+    },
+    {
+      "type": "tag-start",
+      "context": "<div class=\"control-bar ui-shadow\">",
+      "start": 88,
+      "end": 122
+    },
+    {
+      "type": "text",
+      "context": "\n    ",
+      "start": 123,
+      "end": 127
+    },
+    {
+      "type": "tag-start",
+      "context": "<div class=\"ui-label-content\">",
+      "start": 128,
+      "end": 157
+    },
+    {
+      "type": "text",
+      "context": "\n      ",
+      "start": 158,
+      "end": 164
+    },
+    {
+      "type": "tag-start",
+      "context": "<label>",
+      "start": 165,
+      "end": 171
+    },
+    {
+      "type": "text",
+      "context": "设备类型",
+      "start": 172,
+      "end": 175
+    },
+    {
+      "type": "tag-end",
+      "context": "</label>",
+      "start": 176,
+      "end": 183
+    },
+    {
+      "type": "text",
+      "context": "\n      ",
+      "start": 184,
+      "end": 190
+    },
+    {
+      "type": "tag-start",
+      "context": "<div class=\"content\">",
+      "start": 191,
+      "end": 211
+    },
+    {
+      "type": "text",
+      "context": "\n        ",
+      "start": 212,
+      "end": 220
+    },
+    {
+      "type": "tag-start",
+      "context": "<fly-dropdown [options]=\"devices\" [(ngModel)]=\"selectedDevice\" name=\"dropdown\" appendTo=\"body\">",
+      "start": 221,
+      "end": 315
+    },
+    {
+      "type": "text",
+      "context": "",
+      "start": 316,
+      "end": 315
+    },
+    {
+      "type": "tag-end",
+      "context": "</fly-dropdown>",
+      "start": 316,
+      "end": 330
+    },
+    {
+      "type": "text",
+      "context": "\n      ",
+      "start": 331,
+      "end": 337
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 338,
+      "end": 343
+    },
+    {
+      "type": "text",
+      "context": "\n    ",
+      "start": 344,
+      "end": 348
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 349,
+      "end": 354
+    },
+    {
+      "type": "text",
+      "context": "\n  ",
+      "start": 355,
+      "end": 357
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 358,
+      "end": 363
+    },
+    {
+      "type": "text",
+      "context": "\n  ",
+      "start": 364,
+      "end": 366
+    },
+    {
+      "type": "comment",
+      "context": "<!--内容-->",
+      "start": 367,
+      "end": 375
+    },
+    {
+      "type": "text",
+      "context": "\n  ",
+      "start": 376,
+      "end": 378
+    },
+    {
+      "type": "tag-start",
+      "context": "<div class=\"preview-content\">",
+      "start": 379,
+      "end": 407
+    },
+    {
+      "type": "text",
+      "context": "\n    ",
+      "start": 408,
+      "end": 412
+    },
+    {
+      "type": "comment",
+      "context": "<!--这个是为了流布局-->",
+      "start": 413,
+      "end": 427
+    },
+    {
+      "type": "text",
+      "context": "\n    ",
+      "start": 428,
+      "end": 432
+    },
+    {
+      "type": "tag-start",
+      "context": "<div class=\"inner\">",
+      "start": 433,
+      "end": 451
+    },
+    {
+      "type": "text",
+      "context": "\n      ",
+      "start": 452,
+      "end": 458
+    },
+    {
+      "type": "tag-start",
+      "context": "<div [class]=\"'container ui-shadow ' + selectedDevice\">",
+      "start": 459,
+      "end": 513
+    },
+    {
+      "type": "text",
+      "context": "\n        ",
+      "start": 514,
+      "end": 522
+    },
+    {
+      "type": "comment",
+      "context": "<!--遮住，不让用户点击里面的内容-->",
+      "start": 523,
+      "end": 543
+    },
+    {
+      "type": "text",
+      "context": "\n        ",
+      "start": 544,
+      "end": 552
+    },
+    {
+      "type": "tag-start",
+      "context": "<div form-control-editable *ngIf=\"stage\" [fc]=\"stage\">",
+      "start": 553,
+      "end": 606
+    },
+    {
+      "type": "text",
+      "context": "",
+      "start": 607,
+      "end": 606
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 607,
+      "end": 612
+    },
+    {
+      "type": "text",
+      "context": "\n        ",
+      "start": 613,
+      "end": 621
+    },
+    {
+      "type": "tag-start",
+      "context": "<div class=\"mark\">",
+      "start": 622,
+      "end": 639
+    },
+    {
+      "type": "text",
+      "context": "",
+      "start": 640,
+      "end": 639
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 640,
+      "end": 645
+    },
+    {
+      "type": "text",
+      "context": "\n      ",
+      "start": 646,
+      "end": 652
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 653,
+      "end": 658
+    },
+    {
+      "type": "text",
+      "context": "\n    ",
+      "start": 659,
+      "end": 663
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 664,
+      "end": 669
+    },
+    {
+      "type": "text",
+      "context": "\n  ",
+      "start": 670,
+      "end": 672
+    },
+    {
+      "type": "tag-end",
+      "context": "</div>",
+      "start": 673,
+      "end": 678
+    },
+    {
+      "type": "text",
+      "context": "\n",
+      "start": 679,
+      "end": 679
+    },
+    {
+      "type": "tag-end",
+      "context": "</fly-dialog>",
+      "start": 680,
+      "end": 692
+    },
+    {
+      "type": "text",
+      "context": "\n\n",
+      "start": 693,
+      "end": 695
+    }
+  ],
+  "tree": []
+}
